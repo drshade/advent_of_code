@@ -29,12 +29,58 @@ print_sol candidate (Revealed answer) =
 
 instance (Show a, Eq a) => Show (Solution a) where
   show (NoSolution year day) =
-    [i|[SOLUTION] #{year} Day #{printf "%02d" day :: String}: None yet ... 🧐
+    [i|[#{pet year day} #{year} / #{printf "%02d" day :: String}] None yet ... 🧐
     |] :: String
   show (SolvedOne year day q1 q1') =
-    [i|[SOLUTION] #{year} Day #{printf "%02d" day :: String}: A => #{print_sol q1 q1'}
+    [i|[#{pet year day} #{year} / #{printf "%02d" day :: String}] A => #{print_sol q1 q1'}
     |]
   show (SolvedTwo year day q1 q1' q2 q2') =
-    [i|[SOLUTION] #{year} Day #{printf "%02d" day :: String}: A => #{print_sol q1 q1'}
-                   B => #{print_sol q2 q2'}
+    [i|[#{pet year day} #{year} / #{printf "%02d" day :: String}] A => #{print_sol q1 q1'}
+               B => #{print_sol q2 q2'}
     |]
+
+pet :: Year -> Day -> String
+pet year day = pets !! ((year + day - 1) `mod` (length pets))
+  where
+    pets =
+      [ "🐱"
+      , "🐶"
+      , "🐭"
+      , "🐹"
+      , "🐰"
+      , "🦊"
+      , "🐻"
+      , "🐼"
+      , "🐨"
+      , "🐯"
+      , "🦁"
+      , "🐮"
+      , "🐷"
+      , "🐸"
+      , "🐵"
+      , "🐔"
+      , "🐧"
+      , "🐦"
+      , "🐤"
+      , "🐴"
+      , "🦄"
+      , "🐝"
+      , "🐛"
+      , "🦋"
+      , "🐌"
+      , "🐞"
+      , "🐜"
+      , "🐢"
+      , "🐍"
+      , "🦎"
+      , "🐕"
+      , "🐩"
+      , "🐈"
+      , "🐓"
+      , "🦃"
+      , "🐇"
+      , "🐁"
+      , "🐀"
+      , "🐿"
+      , "🦔"
+      ]

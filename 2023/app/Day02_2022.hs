@@ -1,10 +1,9 @@
 module Day02_2022 where
 
-import           AoC
+import           AoC         (RealAnswer (Revealed), Solution (SolvedOne))
 import           Handy       (get_puzzle_input)
 import           Parsing     (run_parser)
-import           Text.Parsec (Parsec, char, count, many1, newline, optional,
-                              (<|>))
+import           Text.Parsec (Parsec, char, many1, newline, (<|>))
 
 data First
   = A
@@ -47,4 +46,4 @@ solve :: IO (Solution Int)
 solve = do
   input <- run_parser pairs <$> get_puzzle_input 2022 2 -- Get the input
   let solution1 = calc 0 input
-  pure $ SolvedOne 2022 25 solution1 (Revealed 13268)
+  pure $ SolvedOne 2022 2 solution1 (Revealed 13268)

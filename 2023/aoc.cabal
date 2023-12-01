@@ -51,7 +51,8 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall -Wno-unused-imports
+    -- ghc-options: -Wall -Wno-unused-imports
+    ghc-options: -Wall
 
 executable tom
     -- Import common warning flags.
@@ -65,6 +66,7 @@ executable tom
                       AoC,
                       Handy,
                       Parsing,
+                      Common,
                       Day01,
                       Day02,
                       Day03,
@@ -93,11 +95,12 @@ executable tom
                       Day02_2022
 
     -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
+    default-extensions: QuasiQuotes, LambdaCase
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.17.0.0,
                       bytestring,
+                      containers,
                       directory,
                       http-conduit,
                       http-client,

@@ -2,6 +2,7 @@
 
 module AoC_2022_Day_14 where
 
+import           Control.Applicative (Alternative ((<|>)))
 import           Control.Monad.State (State, get, put, runState)
 import           Data.List           as List (foldr, intercalate, length,
                                               maximum, minimum)

@@ -3,6 +3,7 @@ module Handy where
 import           Control.Monad              (join)
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
+import           Data.String.Interpolate    (i)
 import           Network.HTTP.Client        (httpLbs, newManager, parseRequest,
                                              requestHeaders, responseBody,
                                              responseStatus)
@@ -34,7 +35,7 @@ trim = unwords . words
 
 -- merge a list into the middle of a list
 insert :: [a] -> Int -> [a] -> [a]
-insert es i l = take i l ++ es ++ drop (i + 1) l
+insert es idx l = take idx l ++ es ++ drop (idx + 1) l
 
 -- fmap inside fmap
 (<$$>) :: (Functor g, Functor f) => (a -> b) -> g (f a) -> g (f b)
@@ -97,24 +98,22 @@ type Day = Int
 get_puzzle_input :: Year -> Day -> IO String
 get_puzzle_input year day = do
   let local_path = "data/"
-      local_file = "input_" <> show year <> "_" <> show day
-      download_url =
-        "https://adventofcode.com/" <>
-        show year <> "/day/" <> show day <> "/input"
-      cookie =
-        "session=53616c7465645f5ffb85d003f81aea0a5a54d8d36583ba38a34d13e493dde9c5fa6e0684c1799625e5417553896b6488092b2e9b2ee0d9b8be7bcb6713e0d0ff;"
+      local_file = [i|input_#{year}_#{day}|]
+      download_url = [i|https://adventofcode.com/#{year}/day/#{day}/input|]
       downloadFile :: IO ()
       downloadFile = do
         putStrLn $
-          "Downloading input for first time (will be cached for future)!"
+          [i|Downloading input for year #{year} day #{day} (will be cached)|]
+        cookie <- readFile "cookie.txt"
         req <- parseRequest download_url
         let req0 = req {requestHeaders = [(hCookie, Char8.pack cookie)]}
         manager <- newManager tlsManagerSettings
         resp <- httpLbs req0 manager
         if statusCode (responseStatus resp) /= 200
-          then error $
-               "Failed to download input for year " <>
-               show year <> " day " <> show day
+          then do
+              let body :: String = LChar8.unpack $ responseBody resp
+              error $
+                [i|Failed to download input for year #{year} day #{day} => #{body}|]
           else do
             let body :: String = LChar8.unpack $ responseBody resp
             writeFile (local_path <> local_file) body
