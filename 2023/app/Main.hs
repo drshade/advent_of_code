@@ -32,52 +32,52 @@ full = do
   putStrLn $ show d01
   d02 <- Day02.solve
   putStrLn $ show d02
-  d03 <- Day03.solve
-  putStrLn $ show d03
-  d04 <- Day04.solve
-  putStrLn $ show d04
-  d05 <- Day05.solve
-  putStrLn $ show d05
-  d06 <- Day06.solve
-  putStrLn $ show d06
-  d07 <- Day07.solve
-  putStrLn $ show d07
-  d08 <- Day08.solve
-  putStrLn $ show d08
-  d09 <- Day09.solve
-  putStrLn $ show d09
-  d10 <- Day10.solve
-  putStrLn $ show d10
-  d11 <- Day11.solve
-  putStrLn $ show d11
-  d12 <- Day12.solve
-  putStrLn $ show d12
-  d13 <- Day13.solve
-  putStrLn $ show d13
-  d14 <- Day14.solve
-  putStrLn $ show d14
-  d15 <- Day15.solve
-  putStrLn $ show d15
-  d16 <- Day16.solve
-  putStrLn $ show d16
-  d17 <- Day17.solve
-  putStrLn $ show d17
-  d18 <- Day18.solve
-  putStrLn $ show d18
-  d19 <- Day19.solve
-  putStrLn $ show d19
-  d20 <- Day20.solve
-  putStrLn $ show d20
-  d21 <- Day21.solve
-  putStrLn $ show d21
-  d22 <- Day22.solve
-  putStrLn $ show d22
-  d23 <- Day23.solve
-  putStrLn $ show d23
-  d24 <- Day24.solve
-  putStrLn $ show d24
-  d25 <- Day25.solve
-  putStrLn $ show d25
+  -- d03 <- Day03.solve
+  -- putStrLn $ show d03
+  -- d04 <- Day04.solve
+  -- putStrLn $ show d04
+  -- d05 <- Day05.solve
+  -- putStrLn $ show d05
+  -- d06 <- Day06.solve
+  -- putStrLn $ show d06
+  -- d07 <- Day07.solve
+  -- putStrLn $ show d07
+  -- d08 <- Day08.solve
+  -- putStrLn $ show d08
+  -- d09 <- Day09.solve
+  -- putStrLn $ show d09
+  -- d10 <- Day10.solve
+  -- putStrLn $ show d10
+  -- d11 <- Day11.solve
+  -- putStrLn $ show d11
+  -- d12 <- Day12.solve
+  -- putStrLn $ show d12
+  -- d13 <- Day13.solve
+  -- putStrLn $ show d13
+  -- d14 <- Day14.solve
+  -- putStrLn $ show d14
+  -- d15 <- Day15.solve
+  -- putStrLn $ show d15
+  -- d16 <- Day16.solve
+  -- putStrLn $ show d16
+  -- d17 <- Day17.solve
+  -- putStrLn $ show d17
+  -- d18 <- Day18.solve
+  -- putStrLn $ show d18
+  -- d19 <- Day19.solve
+  -- putStrLn $ show d19
+  -- d20 <- Day20.solve
+  -- putStrLn $ show d20
+  -- d21 <- Day21.solve
+  -- putStrLn $ show d21
+  -- d22 <- Day22.solve
+  -- putStrLn $ show d22
+  -- d23 <- Day23.solve
+  -- putStrLn $ show d23
+  -- d24 <- Day24.solve
+  -- putStrLn $ show d24
+  -- d25 <- Day25.solve
+  -- putStrLn $ show d25
 
 one :: IO ()
 one = do
@@ -91,4 +91,4 @@ wait = putStrLn "Waiting for next day... 😿"
 --   $ ghcid -r --height 20
 --
 main :: IO ()
-main = one
+main = full

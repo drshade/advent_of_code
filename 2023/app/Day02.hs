@@ -80,4 +80,4 @@ solve = do
   input <- run_parser (many1 parse_game) <$> get_puzzle_input Mine 2023 2
   let solution_1 = solve1 input
   let solution_2 = solve2 input
-  pure $ SolvedTwo 2023 1 solution_1 (Revealed 2449) solution_2 (Revealed 63981)
+  pure $ SolvedTwo 2023 2 solution_1 (Revealed 2449) solution_2 (Revealed 63981)
