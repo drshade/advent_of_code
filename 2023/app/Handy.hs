@@ -93,12 +93,17 @@ type Year = Int
 
 type Day = Int
 
+data WhichPuzzleInput = Example1 | Example2 | Mine
+
 -- Get the puzzle input, either from disk, or from http first time
 --
-get_puzzle_input :: Year -> Day -> IO String
-get_puzzle_input year day = do
+get_puzzle_input :: WhichPuzzleInput -> Year -> Day -> IO String
+get_puzzle_input which_input year day = do
   let local_path = "data/"
-      local_file = [i|input_#{year}_#{day}|]
+      local_file = case which_input of
+        Example1 -> [i|input_#{year}_#{day}_example_1|]
+        Example2 -> [i|input_#{year}_#{day}_example_2|]
+        Mine -> [i|input_#{year}_#{day}|]
       download_url = [i|https://adventofcode.com/#{year}/day/#{day}/input|]
       downloadFile :: IO ()
       downloadFile = do
@@ -131,3 +136,5 @@ get_puzzle_input year day = do
          then downloadFile
          else pure ()
   openFile (local_path <> local_file) ReadMode >>= hGetContents
+
+

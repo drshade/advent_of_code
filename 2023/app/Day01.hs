@@ -2,7 +2,7 @@ module Day01 where
 
 import           AoC
 import           Data.Char   (digitToInt)
-import           Handy       (get_puzzle_input)
+import           Handy       (WhichPuzzleInput (..), get_puzzle_input)
 import           Parsing     (run_parser)
 import           Text.Parsec (Parsec, choice, digit, letter, many1, newline,
                               optional, string, try, (<|>))
@@ -65,7 +65,7 @@ glue_together (f, l) = read $ (show f) <> (show l)
 
 solve :: IO (Solution Int)
 solve = do
-  input <- get_puzzle_input 2023 1
+  input <- get_puzzle_input Mine 2023 1
   let solution_1 =
         sum $ glue_together . first_and_last_signal [] <$> lines input
   let solution_2 =

@@ -81,7 +81,7 @@ full = do
 
 one :: IO ()
 one = do
-  d <- Day01.solve
+  d <- Day02.solve
   putStrLn $ show d
 
 wait :: IO ()

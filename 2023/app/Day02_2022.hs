@@ -1,7 +1,7 @@
 module Day02_2022 where
 
 import           AoC         (RealAnswer (Revealed), Solution (SolvedOne))
-import           Handy       (get_puzzle_input)
+import           Handy       (WhichPuzzleInput (..), get_puzzle_input)
 import           Parsing     (run_parser)
 import           Text.Parsec (Parsec, char, many1, newline, (<|>))
 
@@ -44,6 +44,6 @@ calc acc []          = acc -- Guaranteed that this is the only remaining scenari
 
 solve :: IO (Solution Int)
 solve = do
-  input <- run_parser pairs <$> get_puzzle_input 2022 2 -- Get the input
+  input <- run_parser pairs <$> get_puzzle_input Mine 2022 2 -- Get the input
   let solution1 = calc 0 input
   pure $ SolvedOne 2022 2 solution1 (Revealed 13268)
