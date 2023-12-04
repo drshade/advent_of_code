@@ -2,6 +2,7 @@
 
 module AoC_2022_Day_15 where
 
+import           AoC
 import           Control.Monad       (join)
 import           Control.Monad.State (State, get, put, runState)
 import           Data.Function       (on)
@@ -102,21 +103,18 @@ print_sim coords =
 -- am I closer to the sensor than the that sensors closest beacon?
 run :: IO ()
 run = do
-  real <- read_data (id) "data/AoC_2022_Day_15"
-  case runParser parser () "(input)" real of
-    Left err ->
-      putStrLn $ "A terribly unfortunate parsing error: " ++ (show err)
-    Right entries -> do
-      putStrLn $ show entries
-      putStrLn $ show $ closest_sensors entries (0, 0)
-      let dim@(min_x, min_y, max_x, max_y) = dimensions entries
-      putStrLn $ show dim
-      let scanline =
-            List.filter
-              (\p ->
-                 not (is_beacon entries p) &&
-                 not (is_sensor entries p) && (is_blocked entries p))
-              [(x, 2000000) | x <- [min_x - 100000 .. max_x + 100000]]
-      putStrLn $ "Day15 Q1 => " <> (show $ length scanline)
+  input <- run_parser parser <$> get_puzzle_input Example1 2022 15
+  putStrLn $ show input
+  putStrLn $ show $ closest_sensors input (0, 0)
+  let dim@(min_x, min_y, max_x, max_y) = dimensions input
+  putStrLn $ show dim
+  putStrLn $ print_sim input
+  let scanline =
+        List.filter
+          (\p ->
+             not (is_beacon input p) &&
+             not (is_sensor input p) && (is_blocked input p))
+          [(x, 2000000) | x <- [min_x - 100000 .. max_x + 100000]]
+  putStrLn $ "Day15 Q1 => " <> (show $ length scanline)
 -- 4062165 was too low
 -- 4062164 was too low

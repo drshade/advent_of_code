@@ -48,7 +48,8 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall
+    ghc-options: -O2
+    -- ghc-options: -Wall
 
 executable haskell
     -- Import common warning flags.
@@ -58,7 +59,8 @@ executable haskell
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules:    Utils
+    other-modules:    AoC
+                      Utils
                       AoC_2021_Day_01
                       AoC_2021_Day_02
                       AoC_2022_Day_01
@@ -77,6 +79,7 @@ executable haskell
                       AoC_2022_Day_14
                       AoC_2022_Day_15
 
+    default-extensions: QuasiQuotes, LambdaCase, BangPatterns
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
@@ -85,16 +88,23 @@ executable haskell
                       containers >= 0.6.6,
                       split >= 0.2.3.5,
                       regex-posix >= 0.96.0.1,
+                      bytestring,
+                      directory,
                       parsec,
                       raw-strings-qq,
                       mtl,
                       matrix,
+                      http-conduit,
+                      http-client,
+                      http-client-tls,
+                      http-types,
                       search-algorithms,
                       extra,
-                      vector
+                      vector,
+                      string-interpolate
 
     -- Directories containing source files.
     hs-source-dirs:   app
 
     -- Base language which the package is written in.
-    default-language: Haskell2010
+    default-language: GHC2021
