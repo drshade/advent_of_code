@@ -1,10 +1,10 @@
-{-# LANGUAGE DataKinds   #-}
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE QuasiQuotes #-}
 
 module AoC where
 
-import           Data.String.Interpolate (i)
-import           Text.Printf             (printf)
+import Data.String.Interpolate (i)
+import Text.Printf (printf)
 
 type Year = Int
 
@@ -30,7 +30,8 @@ print_sol candidate (Revealed answer) =
 instance (Show a, Eq a) => Show (Solution a) where
   show (NoSolution year day) =
     [i|[#{pet year day} #{year} / #{printf "%02d" day :: String}] None yet ... 🧐
-    |] :: String
+    |] ::
+      String
   show (SolvedOne year day q1 q1') =
     [i|[#{pet year day} #{year} / #{printf "%02d" day :: String}] A => #{print_sol q1 q1'}
     |]
@@ -41,46 +42,46 @@ instance (Show a, Eq a) => Show (Solution a) where
 
 pet :: Year -> Day -> String
 pet year day = pets !! ((year + day - 1) `mod` (length pets))
-  where
-    pets =
-      [ "🐱"
-      , "🐶"
-      , "🐭"
-      , "🐹"
-      , "🐰"
-      , "🦊"
-      , "🐻"
-      , "🐼"
-      , "🐨"
-      , "🐯"
-      , "🦁"
-      , "🐮"
-      , "🐷"
-      , "🐸"
-      , "🐵"
-      , "🐔"
-      , "🐧"
-      , "🐦"
-      , "🐤"
-      , "🐴"
-      , "🦄"
-      , "🐝"
-      , "🐛"
-      , "🦋"
-      , "🐌"
-      , "🐞"
-      , "🐜"
-      , "🐢"
-      , "🐍"
-      , "🦎"
-      , "🐕"
-      , "🐩"
-      , "🐈"
-      , "🐓"
-      , "🦃"
-      , "🐇"
-      , "🐁"
-      , "🐀"
-      , "🐿"
-      , "🦔"
-      ]
+ where
+  pets =
+    [ "🐱"
+    , "🐶"
+    , "🐭"
+    , "🐹"
+    , "🐰"
+    , "🦊"
+    , "🐻"
+    , "🐼"
+    , "🐨"
+    , "🐯"
+    , "🦁"
+    , "🐮"
+    , "🐷"
+    , "🐸"
+    , "🐵"
+    , "🐔"
+    , "🐧"
+    , "🐦"
+    , "🐤"
+    , "🐴"
+    , "🦄"
+    , "🐝"
+    , "🐛"
+    , "🦋"
+    , "🐌"
+    , "🐞"
+    , "🐜"
+    , "🐢"
+    , "🐍"
+    , "🦎"
+    , "🐕"
+    , "🐩"
+    , "🐈"
+    , "🐓"
+    , "🦃"
+    , "🐇"
+    , "🐁"
+    , "🐀"
+    , "🐿"
+    , "🦔"
+    ]

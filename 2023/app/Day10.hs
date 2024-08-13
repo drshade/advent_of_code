@@ -169,7 +169,10 @@ solve2 input =
       -- Patch the starting position
       start_pos =
         fst $ head $ filter (\(pos, p) -> p == Start_Finish) $ Map.toList world
+      -- *************
+      -- THIS WILL ONLY WORK FOR REAL PUZZLE INPUT (NOT THE TEST INPUT)
       -- patched_world = Map.insert start_pos UpRight_LeftDown $ Map.fromList input
+      -- *************
       patched_world = Map.insert start_pos Up_Down $ Map.fromList input
       inside :: Position -> Int
       inside (x, y) =

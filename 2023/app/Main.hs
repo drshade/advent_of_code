@@ -48,10 +48,10 @@ full = do
   putStrLn $ show d09
   d10 <- Day10.solve
   putStrLn $ show d10
-  -- d11 <- Day11.solve
-  -- putStrLn $ show d11
-  -- d12 <- Day12.solve
-  -- putStrLn $ show d12
+  d11 <- Day11.solve
+  putStrLn $ show d11
+  d12 <- Day12.solve
+  putStrLn $ show d12
   -- d13 <- Day13.solve
   -- putStrLn $ show d13
   -- d14 <- Day14.solve
@@ -81,7 +81,7 @@ full = do
 
 one :: IO ()
 one = do
-  d <- Day10.solve
+  d <- Day12.solve
   putStrLn $ show d
 
 wait :: IO ()
@@ -91,4 +91,4 @@ wait = putStrLn "Waiting for next day... 😿"
 --   $ ghcid -r --height 20
 --
 main :: IO ()
-main = one
+main = full
