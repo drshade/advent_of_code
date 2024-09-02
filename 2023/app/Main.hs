@@ -1,30 +1,30 @@
 module Main where
 
-import qualified Day01 (solve)
-import qualified Day02 (solve)
-import qualified Day03 (solve)
-import qualified Day04 (solve)
-import qualified Day05 (solve)
-import qualified Day06 (solve)
-import qualified Day07 (solve)
-import qualified Day08 (solve)
-import qualified Day09 (solve)
-import qualified Day10 (solve)
-import qualified Day11 (solve)
-import qualified Day12 (solve)
-import qualified Day13 (solve)
-import qualified Day14 (solve)
-import qualified Day15 (solve)
-import qualified Day16 (solve)
-import qualified Day17 (solve)
-import qualified Day18 (solve)
-import qualified Day19 (solve)
-import qualified Day20 (solve)
-import qualified Day21 (solve)
-import qualified Day22 (solve)
-import qualified Day23 (solve)
-import qualified Day24 (solve)
-import qualified Day25 (solve)
+import Day01 qualified (solve)
+import Day02 qualified (solve)
+import Day03 qualified (solve)
+import Day04 qualified (solve)
+import Day05 qualified (solve)
+import Day06 qualified (solve)
+import Day07 qualified (solve)
+import Day08 qualified (solve)
+import Day09 qualified (solve)
+import Day10 qualified (solve)
+import Day11 qualified (solve)
+import Day12 qualified (solve)
+import Day13 qualified (solve)
+import Day14 qualified (solve)
+import Day15 qualified (solve)
+import Day16 qualified (solve)
+import Day17 qualified (solve)
+import Day18 qualified (solve)
+import Day19 qualified (solve)
+import Day20 qualified (solve)
+import Day21 qualified (solve)
+import Day22 qualified (solve)
+import Day23 qualified (solve)
+import Day24 qualified (solve)
+import Day25 qualified (solve)
 
 full :: IO ()
 full = do
@@ -52,32 +52,33 @@ full = do
   putStrLn $ show d11
   d12 <- Day12.solve
   putStrLn $ show d12
-  -- d13 <- Day13.solve
-  -- putStrLn $ show d13
-  -- d14 <- Day14.solve
-  -- putStrLn $ show d14
-  -- d15 <- Day15.solve
-  -- putStrLn $ show d15
-  -- d16 <- Day16.solve
-  -- putStrLn $ show d16
-  -- d17 <- Day17.solve
-  -- putStrLn $ show d17
-  -- d18 <- Day18.solve
-  -- putStrLn $ show d18
-  -- d19 <- Day19.solve
-  -- putStrLn $ show d19
-  -- d20 <- Day20.solve
-  -- putStrLn $ show d20
-  -- d21 <- Day21.solve
-  -- putStrLn $ show d21
-  -- d22 <- Day22.solve
-  -- putStrLn $ show d22
-  -- d23 <- Day23.solve
-  -- putStrLn $ show d23
-  -- d24 <- Day24.solve
-  -- putStrLn $ show d24
-  -- d25 <- Day25.solve
-  -- putStrLn $ show d25
+
+-- d13 <- Day13.solve
+-- putStrLn $ show d13
+-- d14 <- Day14.solve
+-- putStrLn $ show d14
+-- d15 <- Day15.solve
+-- putStrLn $ show d15
+-- d16 <- Day16.solve
+-- putStrLn $ show d16
+-- d17 <- Day17.solve
+-- putStrLn $ show d17
+-- d18 <- Day18.solve
+-- putStrLn $ show d18
+-- d19 <- Day19.solve
+-- putStrLn $ show d19
+-- d20 <- Day20.solve
+-- putStrLn $ show d20
+-- d21 <- Day21.solve
+-- putStrLn $ show d21
+-- d22 <- Day22.solve
+-- putStrLn $ show d22
+-- d23 <- Day23.solve
+-- putStrLn $ show d23
+-- d24 <- Day24.solve
+-- putStrLn $ show d24
+-- d25 <- Day25.solve
+-- putStrLn $ show d25
 
 one :: IO ()
 one = do
