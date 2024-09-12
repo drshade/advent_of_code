@@ -1,16 +1,25 @@
 module Day02 where
 
-import           AoC
-import           Control.Monad (join)
-import           Handy         (WhichPuzzleInput (..), get_puzzle_input)
-import           Parsing       (run_parser)
-import           Text.Parsec   (Parsec, char, choice, digit, many1, newline,
-                                optional, string, (<|>))
+import AoC
+import Control.Monad (join)
+import Handy (WhichPuzzleInput (..), get_puzzle_input)
+import Parsing (run_parser)
+import Text.Parsec (
+  Parsec,
+  char,
+  choice,
+  digit,
+  many1,
+  newline,
+  optional,
+  string,
+  (<|>),
+ )
 
 type Round = [(Colour, Int)]
 
-data Game =
-  Game Int [Round]
+data Game
+  = Game Int [Round]
 
 data Colour
   = Red
@@ -19,39 +28,37 @@ data Colour
   deriving (Eq)
 
 parse_colour :: Parsec String () Colour
-parse_colour = do
-  colour <-
-    choice
-      [ string "red" *> pure Red
-      , string "green" *> pure Green
-      , string "blue" *> pure Blue
-      ]
-  pure colour
+parse_colour =
+  choice
+    [ string "red" *> pure Red
+    , string "green" *> pure Green
+    , string "blue" *> pure Blue
+    ]
 
 parse_round :: Parsec String () Round
-parse_round = do
-  many1 $ do
-    count <- read <$> many1 digit <* char ' '
-    colour <- parse_colour <* (optional $ string ", ")
-    pure (colour, count) <* (optional $ string "; ")
+parse_round = many1 $ do
+  count <- read <$> many1 digit <* char ' '
+  colour <- parse_colour <* (optional $ string ", ")
+  pure (colour, count) <* (optional $ string "; ")
 
 parse_game :: Parsec String () Game
-parse_game = do
-  number <- string "Game " *> (read <$> many1 digit)
-  rounds <- string ": " *> many1 parse_round <* optional newline
-  pure $ Game number rounds
+parse_game = Game <$> number <*> rounds
+ where
+  number = string "Game " *> (read <$> many1 digit)
+  rounds = string ": " *> many1 parse_round <* optional newline
 
 valid :: Round -> Bool
 valid =
-  foldr (&&) True .
-  fmap
-    (\case
-       (Red, c)   -> c <= 12
-       (Green, c) -> c <= 13
-       (Blue, c)  -> c <= 14)
+  all (== True)
+    . fmap
+      ( \case
+          (Red, c) -> c <= 12
+          (Green, c) -> c <= 13
+          (Blue, c) -> c <= 14
+      )
 
 solve1 :: [Game] -> Int
-solve1 (Game number rounds:gs) =
+solve1 (Game number rounds : gs) =
   if all (== True) $ valid <$> rounds
     then number + solve1 gs
     else solve1 gs
@@ -69,8 +76,8 @@ power (r, g, b) = r * g * b
 
 solve2 :: [Game] -> Int
 solve2 games = sum $ power . min_cubes <$> all_rounds
-  where
-    all_rounds = (\(Game _ r) -> r) <$> games
+ where
+  all_rounds = (\(Game _ r) -> r) <$> games
 
 solve :: IO (Solution Int)
 solve = do
