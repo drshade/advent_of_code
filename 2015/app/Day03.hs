@@ -3,8 +3,8 @@ module Day03 where
 import Control.Arrow ((***))
 import Data.Functor (($>))
 import Data.List (partition)
-import Data.Map (Map, empty, fromList, insertWith)
-import Text.Parsec (char, choice, many1, parse)
+import Data.Map (empty, insertWith)
+import Text.Parsec (char, choice, many1)
 import Text.Parsec.String (Parser, parseFromFile)
 
 stepsParser :: Parser [(Int, Int)]
