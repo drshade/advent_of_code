@@ -7,5 +7,5 @@ parser = many1 anyChar
 
 part1 :: IO ()
 part1 = do
-    input <- parse parser <$> getInput Main 2023 1
+    input <- parse parser <$> getInput Main 2024 1
     putStrLn $ show input
