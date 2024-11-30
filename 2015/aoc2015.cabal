@@ -61,7 +61,7 @@ executable aoc2015
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules:    Day01, Day02, Day03, Day04, Day06
+    other-modules:    Day01, Day02, Day03, Day04, Day05, Day06, Day07
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -75,6 +75,10 @@ executable aoc2015
                     , vector
                     , cryptohash-md5
                     , base16-bytestring
+                    , megaparsec
+                    , parser-combinators
+                    , mtl
+                    , MemoTrie
 
     -- Directories containing source files.
     hs-source-dirs:   app
