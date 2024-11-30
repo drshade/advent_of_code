@@ -1,28 +1,50 @@
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 
 module Day12 where
 
-import qualified AoC                         as AoC
-import           Control.Monad               (join)
-import           Control.Monad.State         (State, get, put, runState)
-import           Control.Parallel.Strategies (evalBuffer, parBuffer, parMap,
-                                              rpar, rseq, runEval)
-import           Data.List                   (groupBy)
-import qualified Data.Map                    as Map
-import           Data.Maybe                  (fromMaybe)
-import           Data.MemoTrie
-import qualified Data.Set                    as Set
-import           Debug.Trace                 (trace)
-import           GHC.Generics                (Generic)
-import           Handy                       (WhichPuzzleInput (..),
-                                              get_puzzle_input, unique)
-import           Parsing                     (run_parser, run_parser_with_state)
-import           Text.Parsec                 (Parsec, anyChar, char, choice,
-                                              digit, getState, letter, many1,
-                                              newline, optional, sepBy,
-                                              setState, string, try, (<|>))
+import AoC qualified as AoC
+import Control.Monad (join)
+import Control.Monad.State (State, get, put, runState)
+import Control.Parallel.Strategies
+  ( evalBuffer,
+    parBuffer,
+    parMap,
+    rpar,
+    rseq,
+    runEval,
+  )
+import Data.List (groupBy)
+import Data.Map qualified as Map
+import Data.Maybe (fromMaybe)
+import Data.MemoTrie
+import Data.Set qualified as Set
+import Debug.Trace (trace)
+import GHC.Generics (Generic)
+import Handy
+  ( WhichPuzzleInput (..),
+    get_puzzle_input,
+    unique,
+  )
+import Parsing (run_parser, run_parser_with_state)
+import Text.Parsec
+  ( Parsec,
+    anyChar,
+    char,
+    choice,
+    digit,
+    getState,
+    letter,
+    many1,
+    newline,
+    optional,
+    sepBy,
+    setState,
+    string,
+    try,
+    (<|>),
+  )
 
 data Spring
   = Unknown
@@ -31,8 +53,10 @@ data Spring
   deriving (Show, Eq, Enum, Bounded, Generic)
 
 instance HasTrie Spring where
-  newtype (Spring :->: b) = SpringTrie{unSpringTrie ::
-                                     Reg Spring :->: b}
+  newtype Spring :->: b = SpringTrie
+    { unSpringTrie ::
+        Reg Spring :->: b
+    }
   trie = trieGeneric SpringTrie
   untrie = untrieGeneric unSpringTrie
   enumerate = enumerateGeneric unSpringTrie
@@ -40,9 +64,9 @@ instance HasTrie Spring where
 parse_spring :: Parsec String () Spring
 parse_spring = do
   choice
-    [ char '.' *> pure Operational
-    , char '#' *> pure Damaged
-    , char '?' *> pure Unknown
+    [ char '.' *> pure Operational,
+      char '#' *> pure Damaged,
+      char '?' *> pure Unknown
     ]
 
 parse_damaged_order :: Parsec String () [Int]
@@ -74,19 +98,19 @@ data Tree
   deriving (Show)
 
 perm :: [Spring] -> [Int] -> Tree
-perm springs (0:cs) = perm springs cs --
-perm (Unknown:rest) (c:cs) =
+perm springs (0 : cs) = perm springs cs --
+perm (Unknown : rest) (c : cs) =
   Fork Operational (perm rest (c : cs)) Damaged (perm rest (c - 1 : cs))
-perm (a:rest) cs = Branch a (perm rest cs)
+perm (a : rest) cs = Branch a (perm rest cs)
 perm [] cs = Leaf
 
 perm2 :: [Spring] -> [Int] -> [[Spring]]
 perm2 springs counts =
-  let go path springs (0:cs) = go path springs cs
-      go path (Unknown:rest) (c:cs) =
-        go (Operational : path) rest (c : cs) ++
-        go (Damaged : path) rest (c - 1 : cs)
-      go path (a:rest) cs = go (a : path) rest cs
+  let go path springs (0 : cs) = go path springs cs
+      go path (Unknown : rest) (c : cs) =
+        go (Operational : path) rest (c : cs)
+          ++ go (Damaged : path) rest (c - 1 : cs)
+      go path (a : rest) cs = go (a : path) rest cs
       go path _ _ = [reverse path]
    in go [] springs counts
 
@@ -94,11 +118,11 @@ perm2' = memo2 perm2
 
 perm3 :: [Spring] -> [Int] -> Int
 perm3 springs counts =
-  let go path springs (0:cs) = go path springs cs
-      go path (Unknown:rest) (c:cs) =
-        go (Operational : path) rest (c : cs) +
-        go (Damaged : path) rest (c - 1 : cs)
-      go path (a:rest) cs = go (a : path) rest cs
+  let go path springs (0 : cs) = go path springs cs
+      go path (Unknown : rest) (c : cs) =
+        go (Operational : path) rest (c : cs)
+          + go (Damaged : path) rest (c - 1 : cs)
+      go path (a : rest) cs = go (a : path) rest cs
       go path _ _ =
         let x =
               if (valid_permutation counts $ reverse path)
@@ -110,19 +134,20 @@ perm3 springs counts =
       gomemo :: ([Spring], [Spring], [Int]) -> Int
       gomemo =
         memoFix
-          (\rec (path', springs', counts') ->
-             case (path', springs', counts') of
-               (path'', springs'', (0:cs)) -> rec (path'', springs'', cs)
-               (path'', (Unknown:rest), (c:cs)) ->
-                 rec ((Operational : path''), rest, (c : cs)) +
-                 rec ((Damaged : path''), rest, (c - 1 : cs))
-               (path'', (a:rest), cs) -> rec ((a : path''), rest, cs)
-               (path'', _, _) ->
-                 if (valid_permutation counts $ reverse path'')
-                   then 1
-                   else 0)
-   -- in gomemo2 springs counts
-   in go [] springs counts
+          ( \rec (path', springs', counts') ->
+              case (path', springs', counts') of
+                (path'', springs'', (0 : cs)) -> rec (path'', springs'', cs)
+                (path'', (Unknown : rest), (c : cs)) ->
+                  rec ((Operational : path''), rest, (c : cs))
+                    + rec ((Damaged : path''), rest, (c - 1 : cs))
+                (path'', (a : rest), cs) -> rec ((a : path''), rest, cs)
+                (path'', _, _) ->
+                  if (valid_permutation counts $ reverse path'')
+                    then 1
+                    else 0
+          )
+   in -- in gomemo2 springs counts
+      go [] springs counts
 
 flatten :: Tree -> [[Spring]]
 flatten tree = go [] tree
@@ -138,9 +163,9 @@ flatten tree = go [] tree
 -- -- ? [1] -> #
 -- permute (Unknown:rest) (c:cs)             = 1 + permute rest (c - 1 : cs)
 -- permute ()
-permute springs (0:cs) = permute springs cs
-permute (a:rest) cs    = permute rest cs
-permute [] cs          = 0
+permute springs (0 : cs) = permute springs cs
+permute (a : rest) cs = permute rest cs
+permute [] cs = 0
 
 explode :: Int -> ([Spring], [Int]) -> ([Spring], [Int])
 explode times (springs, damages) =
@@ -160,7 +185,7 @@ solve2 input =
       count springs damaged = perm3 springs damaged
       x = parMap (rpar) (\(s, d) -> count s d) exploded
       y = runEval $ parBuffer 4 rpar (map (\(s, d) -> count s d) exploded)
-   in 0 --sum $ y -- sum $ (\(s, d) -> count s d) <$> exploded
+   in 0 -- sum $ y -- sum $ (\(s, d) -> count s d) <$> exploded
 
 solve :: IO (AoC.Solution Int)
 solve = do

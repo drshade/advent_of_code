@@ -1,3 +1,5 @@
 .metals
 .vscode
+cookie.txt
 dist-newstyle/
+data/
