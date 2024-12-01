@@ -4,7 +4,6 @@ import           AoC
 import           AoCTypes
 import           Control.Concurrent (threadDelay)
 import           Control.Exception  (catch)
-import           Data.List          (intercalate)
 import           Data.Map           (empty)
 import           DiscordWebhook
 

@@ -34,14 +34,7 @@
         "2306561": {
             "name": "micky-gee",
             "id": 2306561,
-            "completion_day_level": {
-                "1": {
-                    "1": {
-                        "star_index": 44248,
-                        "get_star_ts": 1733045580
-                    }
-                }
-            },
+            "completion_day_level": {},
             "local_score": 141,
             "stars": 1,
             "last_star_ts": 1733045758,

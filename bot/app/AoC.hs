@@ -32,8 +32,8 @@ instance Show Update where
     show :: Update -> String
     show (JoinedLeaderboard m) = [i|#{m & memberName} joined the leaderboard|]
     show (LeftLeaderboard m) = [i|#{m & memberName} left the leaderboard|]
-    show (EarnedStar m d 1) = [i|#{m & memberName} earned the ★ for day #{d}!|]
-    show (EarnedStar m d 2) = [i|#{m & memberName} earned the ⭐ for day #{d}!|]
+    show (EarnedStar m d 1) = [i|#{m & memberName} unlocked ★ for day #{d}!|]
+    show (EarnedStar m d 2) = [i|#{m & memberName} unlocked ⭐ for day #{d}!|]
     show (EarnedStar m _ _) = [i|#{m & memberName} strangely earned a non-existent star??|]
 
 getLeaverJoinerUpdates :: Leaderboard -> Leaderboard -> [Update]
@@ -83,7 +83,7 @@ getPrivateLeaderboard year boardid = do
     else pure $ LChar8.unpack $ responseBody resp
 
 parseJson :: String -> Leaderboard
-parseJson = fromMaybe (error "Unable to decode leaderboard") . decode . LChar8.pack
+parseJson contents = fromMaybe (error $ "Unable to decode leaderboard: \n" <> contents) (decode $ LChar8.pack $ contents)
 
 getTemp1 :: IO String
 getTemp1 = readFile "temp1.json"
