@@ -1,0 +1,798 @@
+{
+    "owner_id": 2306561,
+    "event": "2024",
+    "members": {
+        "635721": {
+            "local_score": 0,
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "name": "Nikeel Sathoo",
+            "id": 635721,
+            "completion_day_level": {}
+        },
+        "2276167": {
+            "global_score": 0,
+            "last_star_ts": 1733034262,
+            "stars": 2,
+            "local_score": 146,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733033643,
+                        "star_index": 16590
+                    },
+                    "2": {
+                        "star_index": 17875,
+                        "get_star_ts": 1733034262
+                    }
+                }
+            },
+            "name": "Tom Wells",
+            "id": 2276167
+        },
+        "2306561": {
+            "name": "micky-gee",
+            "id": 2306561,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "star_index": 44248,
+                        "get_star_ts": 1733045580
+                    },
+                    "2": {
+                        "get_star_ts": 1733045758,
+                        "star_index": 44789
+                    }
+                }
+            },
+            "local_score": 141,
+            "stars": 2,
+            "last_star_ts": 1733045758,
+            "global_score": 0
+        },
+        "2526387": {
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 2526387,
+            "name": "mneethling"
+        },
+        "2530770": {
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733031840,
+                        "star_index": 12507
+                    },
+                    "2": {
+                        "star_index": 14004,
+                        "get_star_ts": 1733032448
+                    }
+                }
+            },
+            "id": 2530770,
+            "name": "Bhavesh Sooka",
+            "global_score": 0,
+            "last_star_ts": 1733032448,
+            "stars": 2,
+            "local_score": 150
+        },
+        "2541237": {
+            "name": "sibajikani",
+            "id": 2541237,
+            "completion_day_level": {},
+            "local_score": 0,
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0
+        },
+        "2545172": {
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "name": "saffronprawn199",
+            "id": 2545172,
+            "completion_day_level": {}
+        },
+        "2556687": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Ramtin Mesgari",
+            "id": 2556687
+        },
+        "2640807": {
+            "name": "GarvieMichael",
+            "id": 2640807,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "2663516": {
+            "name": "DamienSynthesis",
+            "id": 2663516,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0
+        },
+        "2664424": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 2664424,
+            "name": "Tawanda"
+        },
+        "2664511": {
+            "name": "Black Cat",
+            "id": 2664511,
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "2666338": {
+            "id": 2666338,
+            "name": "Harshil Sheganlall",
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "2670415": {
+            "name": "PJ Fisher",
+            "id": 2670415,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "2679232": {
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 2679232,
+            "name": "Matthew-Crockett"
+        },
+        "2707805": {
+            "id": 2707805,
+            "name": "Kayla Levy",
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "2784855": {
+            "name": "Hanno Brink",
+            "id": 2784855,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "2844997": {
+            "name": "danielhorne",
+            "id": 2844997,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0
+        },
+        "3198956": {
+            "name": "HarshilSheganlall",
+            "id": 3198956,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "3210766": {
+            "id": 3210766,
+            "name": "Humaira Ahmed",
+            "completion_day_level": {},
+            "local_score": 0,
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0
+        },
+        "3213562": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "name": "austin-synthesis",
+            "id": 3213562,
+            "completion_day_level": {}
+        },
+        "3213572": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Miguel Laranjeira",
+            "id": 3213572
+        },
+        "3213602": {
+            "name": "pietersynthesis",
+            "id": 3213602,
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3213605": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3213605,
+            "name": "Kagiso Marvin Molekwa"
+        },
+        "3213608": {
+            "id": 3213608,
+            "name": "Ruby Tubes De Beer",
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0
+        },
+        "3213609": {
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3213609,
+            "name": "JaydenHardman"
+        },
+        "3213613": {
+            "completion_day_level": {},
+            "name": "MANENO MGWAMI",
+            "id": 3213613,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3213614": {
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3213614,
+            "name": "rodneye"
+        },
+        "3213615": {
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733040456,
+                        "star_index": 30225
+                    },
+                    "2": {
+                        "get_star_ts": 1733041164,
+                        "star_index": 31921
+                    }
+                }
+            },
+            "name": "deanddm",
+            "id": 3213615,
+            "last_star_ts": 1733041164,
+            "stars": 2,
+            "global_score": 0,
+            "local_score": 144
+        },
+        "3213621": {
+            "local_score": 152,
+            "last_star_ts": 1733030820,
+            "stars": 2,
+            "global_score": 0,
+            "id": 3213621,
+            "name": "Marcin Wojcik",
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733030044,
+                        "star_index": 4576
+                    },
+                    "2": {
+                        "get_star_ts": 1733030820,
+                        "star_index": 9069
+                    }
+                }
+            }
+        },
+        "3213625": {
+            "name": "jasonmervis",
+            "id": 3213625,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0
+        },
+        "3213637": {
+            "id": 3213637,
+            "name": "Tjaard du Plessis",
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3213639": {
+            "id": 3213639,
+            "name": "A-Strydom",
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "3213641": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "id": 3213641,
+            "name": "Andries Steenkamp",
+            "completion_day_level": {}
+        },
+        "3213644": {
+            "id": 3213644,
+            "name": "mrossouw",
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3213659": {
+            "completion_day_level": {},
+            "id": 3213659,
+            "name": "JesseHarri-Syn",
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0
+        },
+        "3213680": {
+            "completion_day_level": {},
+            "id": 3213680,
+            "name": "tumbone",
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3213690": {
+            "local_score": 154,
+            "last_star_ts": 1733030027,
+            "stars": 2,
+            "global_score": 0,
+            "name": "Daniel-Riverwood",
+            "id": 3213690,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733029755,
+                        "star_index": 1598
+                    },
+                    "2": {
+                        "star_index": 4435,
+                        "get_star_ts": 1733030027
+                    }
+                }
+            }
+        },
+        "3213706": {
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3213706,
+            "name": "CleoreseCandiceManes"
+        },
+        "3213731": {
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3213731,
+            "name": "Marcus Loveland"
+        },
+        "3213833": {
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "RubbaDuckie",
+            "id": 3213833
+        },
+        "3214193": {
+            "completion_day_level": {},
+            "name": "Michaela",
+            "id": 3214193,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0
+        },
+        "3214487": {
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "name": "Ryan",
+            "id": 3214487,
+            "completion_day_level": {}
+        },
+        "3215143": {
+            "completion_day_level": {},
+            "name": "YashBhaw",
+            "id": 3215143,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3216156": {
+            "completion_day_level": {},
+            "id": 3216156,
+            "name": "nicholasc69",
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3216224": {
+            "id": 3216224,
+            "name": "Kayla Levy",
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3222144": {
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3222144,
+            "name": "Phillip Strydom"
+        },
+        "3222162": {
+            "name": "louisphilip",
+            "id": 3222162,
+            "completion_day_level": {},
+            "local_score": 0,
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0
+        },
+        "3223024": {
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Enoch C",
+            "id": 3223024
+        },
+        "3225840": {
+            "global_score": 0,
+            "last_star_ts": 1733029862,
+            "stars": 2,
+            "local_score": 156,
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "star_index": 0,
+                        "get_star_ts": 1733029635
+                    },
+                    "2": {
+                        "star_index": 2800,
+                        "get_star_ts": 1733029862
+                    }
+                }
+            },
+            "name": "hxnk-57",
+            "id": 3225840
+        },
+        "3304007": {
+            "name": "lukaszmac",
+            "id": 3304007,
+            "completion_day_level": {},
+            "local_score": 0,
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0
+        },
+        "3321792": {
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733032830,
+                        "star_index": 14879
+                    },
+                    "2": {
+                        "star_index": 16838,
+                        "get_star_ts": 1733033757
+                    }
+                }
+            },
+            "name": "MarindaSynthesis",
+            "id": 3321792,
+            "stars": 2,
+            "last_star_ts": 1733033757,
+            "global_score": 0,
+            "local_score": 148
+        },
+        "3334674": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "id": 3334674,
+            "name": "S7iso-Maseko",
+            "completion_day_level": {}
+        },
+        "3334907": {
+            "name": "PrinceIsac",
+            "id": 3334907,
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3335544": {
+            "completion_day_level": {},
+            "name": "Ruballs",
+            "id": 3335544,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3335549": {
+            "completion_day_level": {},
+            "id": 3335549,
+            "name": "Michael Wilkins",
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0
+        },
+        "3342390": {
+            "completion_day_level": {},
+            "id": 3342390,
+            "name": "Sjk-Lacoste",
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3352884": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "name": "kcekron",
+            "id": 3352884,
+            "completion_day_level": {}
+        },
+        "3369672": {
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 3369672,
+            "name": "Yoni Lew"
+        },
+        "3629858": {
+            "id": 3629858,
+            "name": "Stuart Dodkins",
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0
+        },
+        "3632000": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "id": 3632000,
+            "name": "matsynthesis",
+            "completion_day_level": {}
+        },
+        "3633702": {
+            "completion_day_level": {},
+            "id": 3633702,
+            "name": "JaydeeSale",
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3641802": {
+            "name": "MichaelNyaks1",
+            "id": 3641802,
+            "completion_day_level": {},
+            "local_score": 0,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0
+        },
+        "3688046": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "id": 3688046,
+            "name": null,
+            "completion_day_level": {}
+        },
+        "3725800": {
+            "global_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Saskia Bester",
+            "id": 3725800
+        },
+        "3735502": {
+            "completion_day_level": {},
+            "name": "Johan O'Connell",
+            "id": 3735502,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "3738592": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "name": "Mikaelan Sami",
+            "id": 3738592,
+            "completion_day_level": {}
+        },
+        "3872670": {
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Hugo",
+            "id": 3872670
+        },
+        "4207879": {
+            "completion_day_level": {},
+            "name": "Liad Peretz",
+            "id": 4207879,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0
+        },
+        "4236434": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "name": "Chad Epstein",
+            "id": 4236434
+        },
+        "4236606": {
+            "local_score": 0,
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "name": "Neldan Janse van Rensburg",
+            "id": 4236606,
+            "completion_day_level": {}
+        },
+        "4240106": {
+            "completion_day_level": {},
+            "id": 4240106,
+            "name": "Michael Garvie",
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0
+        },
+        "4240538": {
+            "completion_day_level": {},
+            "name": "Vincent De Comarmond",
+            "id": 4240538,
+            "stars": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "4283988": {
+            "name": "AndriesSynthesis",
+            "id": 4283988,
+            "completion_day_level": {},
+            "local_score": 0,
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0
+        },
+        "4290322": {
+            "last_star_ts": 0,
+            "global_score": 0,
+            "stars": 0,
+            "local_score": 0,
+            "completion_day_level": {},
+            "id": 4290322,
+            "name": "Rui"
+        },
+        "4296372": {
+            "completion_day_level": {},
+            "id": 4296372,
+            "name": "Niclan",
+            "last_star_ts": 0,
+            "stars": 0,
+            "global_score": 0,
+            "local_score": 0
+        },
+        "4299109": {
+            "completion_day_level": {
+                "1": {
+                    "1": {
+                        "get_star_ts": 1733045264,
+                        "star_index": 43301
+                    },
+                    "2": {
+                        "get_star_ts": 1733046121,
+                        "star_index": 45903
+                    }
+                }
+            },
+            "name": "Quinn-dup202",
+            "id": 4299109,
+            "global_score": 0,
+            "last_star_ts": 1733046121,
+            "stars": 2,
+            "local_score": 141
+        }
+    }
+}
