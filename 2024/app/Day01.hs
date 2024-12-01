@@ -3,11 +3,11 @@ import           Data.List   (sort)
 import qualified Data.Map    as Map
 import           Data.Maybe  (fromMaybe)
 import           Handy
-import           Text.Parsec (char, digit, many1, newline, optional)
+import           Text.Parsec (digit, many1, newline, spaces)
 
 parser :: Parser [(Int, Int)]
-parser = many1 $ (,) <$> (read <$> many1 digit) <* (many1 $ char ' ')
-                     <*> (read <$> many1 digit) <* optional newline
+parser = many1 $ (,) <$> (read <$> many1 digit) <* spaces
+                     <*> (read <$> many1 digit) <* newline
 
 part1 :: IO Int
 part1 = do
@@ -18,5 +18,5 @@ part1 = do
 part2 :: IO Int
 part2 = do
     input <- parse parser <$> getInput Main 2024 1
-    let simmap = foldr (\e acc -> Map.insertWith (+) e 1 acc) Map.empty (snd <$> input)
-    pure $ foldr (\e acc -> (fromMaybe 0 $ Map.lookup e simmap) * e + acc) 0 (fst <$> input)
+    let freqmap = foldr (\e acc -> Map.insertWith (+) e 1 acc) Map.empty (snd <$> input)
+    pure $ foldr (\e acc -> (fromMaybe 0 $ Map.lookup e freqmap) * e + acc) 0 (fst <$> input)
