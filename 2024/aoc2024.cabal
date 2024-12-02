@@ -85,4 +85,4 @@ executable aoc2024
     hs-source-dirs:   app
 
     -- Base language which the package is written in.
-    default-language: GHC2024
+    default-language: GHC2021
