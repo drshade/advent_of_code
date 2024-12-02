@@ -61,7 +61,7 @@ executable bot
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules:    AoC, AoCTypes, DiscordWebhook
+    other-modules:    AoC, AoCTypes, DiscordWebhook, Utils
 
     -- LANGUAGE extensions used by modules in this package.
     default-extensions: QuasiQuotes, LambdaCase, BangPatterns, TemplateHaskell

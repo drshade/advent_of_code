@@ -19,6 +19,7 @@ import           Network.HTTP.Types.Header  (hCookie)
 import           Network.HTTP.Types.Status  (statusCode)
 
 import           Prelude                    hiding (id)
+import           Utils                      (stripNewlines)
 
 data Update
     = JoinedLeaderboard Member
@@ -65,8 +66,6 @@ getEarnedStarUpdates old new =
 getUpdates :: Leaderboard -> Leaderboard -> [Update]
 getUpdates old new = getLeaverJoinerUpdates old new ++ getEarnedStarUpdates old new
 
-stripNewlines :: String -> String
-stripNewlines = filter (/= '\n')
 
 getPrivateLeaderboard :: Year -> LeaderboardId -> IO String
 getPrivateLeaderboard year boardid = do
