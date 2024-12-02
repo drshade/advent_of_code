@@ -65,20 +65,23 @@ getEarnedStarUpdates old new =
 getUpdates :: Leaderboard -> Leaderboard -> [Update]
 getUpdates old new = getLeaverJoinerUpdates old new ++ getEarnedStarUpdates old new
 
+stripNewlines :: String -> String
+stripNewlines = filter (/= '\n')
+
 getPrivateLeaderboard :: Year -> LeaderboardId -> IO String
 getPrivateLeaderboard year boardid = do
     let download_url = [i|https://adventofcode.com/#{year}/leaderboard/private/view/#{boardid}.json|]
-    putStrLn $
+    putStrLn
         [i|Downloading leaderboard for year #{year}|]
     cookie <- readFile "cookie.txt"
     req <- parseRequest download_url
-    let req0 = req{requestHeaders = [(hCookie, Char8.pack cookie)]}
+    let req0 = req{requestHeaders = [(hCookie, Char8.pack (stripNewlines cookie))]}
     manager <- newManager tlsManagerSettings
     resp <- httpLbs req0 manager
     if statusCode (responseStatus resp) /= 200
     then do
         let body :: String = LChar8.unpack $ responseBody resp
-        error $
+        error
             [i|Failed to download leaderboard #{boardid} for year #{year} => #{body}|]
     else pure $ LChar8.unpack $ responseBody resp
 
