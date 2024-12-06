@@ -13,16 +13,16 @@ valid xs =
      in all (\i -> i > 0 && i <= 3) diffs'
 
 valid' :: [Int] -> Bool
-valid' xs = any (== True) $ valid <$> combinations
+valid' xs = any valid combinations
     -- Generate all combinations of lists where one element is removed
     where combinations = [ take i xs ++ drop (i + 1) xs | i <- [0..length xs] ]
 
 part1 :: IO Int
 part1 = do
     input <- parse parser <$> getInput Main 2024 2
-    pure $ length $ filter (== True) $ valid <$> input
+    pure $ length $ filter id $ valid <$> input
 
 part2 :: IO Int
 part2 = do
     input <- parse parser <$> getInput Main 2024 2
-    pure $ length $ filter (== True) $ valid' <$> input
+    pure $ length $ filter id $ valid' <$> input

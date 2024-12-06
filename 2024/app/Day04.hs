@@ -37,8 +37,7 @@ mas grid pos =
               , [('A',(0,0)),('S',(-1,-1)),('M',(1,-1)),('S',(-1,1)),('M',(1,1))]
               , [('A',(0,0)),('S',(-1,-1)),('S',(1,-1)),('M',(-1,1)),('M',(1,1))]
               ]
-        x = (\p -> all (== True) $ (\(pm,pd) -> Just pm == peek grid pos pd) <$> p) <$> pat
-     in any (== True) x
+     in any (all (\(pm,pd) -> Just pm == peek grid pos pd)) pat
 
 part1 :: IO Int
 part1 = do
@@ -49,5 +48,5 @@ part1 = do
 part2 :: IO Int
 part2 = do
     input <- parse parser <$> getInput Main 2024 4
-    pure $ length $ filter (== True) $ mas input <$> Map.keys input
+    pure $ length $ filter id $ mas input <$> Map.keys input
 

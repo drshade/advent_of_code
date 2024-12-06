@@ -18,5 +18,5 @@ part1 = do
 part2 :: IO Int
 part2 = do
     input <- parse parser <$> getInput Main 2024 1
-    let freqmap = foldr (\e acc -> Map.insertWith (+) e 1 acc) Map.empty (snd <$> input)
-    pure $ foldr (\e acc -> (fromMaybe 0 $ Map.lookup e freqmap) * e + acc) 0 (fst <$> input)
+    let freqmap = foldr ((\e acc -> Map.insertWith (+) e 1 acc) . snd) Map.empty input
+    pure $ foldr ((\e acc -> fromMaybe 0 (Map.lookup e freqmap) * e + acc) . fst) 0 input
