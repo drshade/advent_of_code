@@ -1,5 +1,4 @@
 module Day07 where
-import           Debug.Trace (trace)
 import           Handy
 import           Text.Parsec (char, digit, many1, newline, optional, sepBy1,
                               string)
