@@ -1,7 +1,7 @@
 module Day06 where
 import           Control.Applicative ((<|>))
 import qualified Data.Map            as Map
-import           Data.Set            (Set, empty, insert, member, size)
+import           Data.Set            (Set, empty, insert, member, size, toList)
 import           Handy
 import           Text.Parsec         (char, getPosition, many1, newline,
                                       optional, sourceColumn, sourceLine)
@@ -25,13 +25,14 @@ turn (0,1)  = (-1,0)
 turn (-1,0) = (0,-1)
 turn _      = error "Invalid facing!"
 
-walk :: Grid -> Pos -> Pos -> Set Pos -> Int
+walk :: Grid -> Pos -> Pos -> Set Pos -> Set Pos
 walk grid pos@(gx,gy) facing@(dx,dy) history =
-    case Map.lookup (gx+dx, gy+dy) grid of
-        Just Open     -> walk grid (gx+dx, gy+dy) facing (insert pos history)
-        Just Obstacle -> walk grid pos (turn facing) (insert pos history)
+    let history' = insert pos history
+     in case Map.lookup (gx+dx, gy+dy) grid of
+        Just Open     -> walk grid (gx+dx, gy+dy) facing history'
+        Just Obstacle -> walk grid pos (turn facing) history'
         Just Guard    -> error "Found a guard??"
-        Nothing       -> size (insert pos history)
+        Nothing       -> history'
 
 guard :: Grid -> Pos
 guard = fst . head . filter ((== Guard) . snd) . Map.toList
@@ -40,21 +41,20 @@ part1 :: IO ()
 part1 = do
     grid <- parse parser <$> getInput Main 2024 6
     let grid' = Map.insert (guard grid) Open grid
-    print $ walk grid' (guard grid) (0,-1) empty
+    print $ size $ walk grid' (guard grid) (0,-1) empty
 
-walk' :: Grid -> Pos -> Pos -> Pos -> Set (Pos, Pos) -> Bool
-walk' grid obstacle pos@(gx,gy) facing@(dx,dy) history =
-    let grid' = Map.insert obstacle Obstacle grid
-     in (member (pos, facing) history || (case Map.lookup (gx+dx, gy+dy) grid' of
-        Just Open     -> walk' grid obstacle (gx+dx, gy+dy) facing (insert (pos, facing) history)
-        Just Obstacle -> walk' grid obstacle pos (turn facing) (insert (pos, facing) history)
+walk' :: Grid -> Pos -> Pos -> Set (Pos, Pos) -> Bool
+walk' grid pos@(gx,gy) facing@(dx,dy) history =
+    member (pos, facing) history || (case Map.lookup (gx+dx, gy+dy) grid of
+        Just Open     -> walk' grid (gx+dx, gy+dy) facing (insert (pos, facing) history)
+        Just Obstacle -> walk' grid pos (turn facing) (insert (pos, facing) history)
         Just Guard    -> error "Found a guard??"
-        Nothing       -> False))
+        Nothing       -> False)
 
 part2 :: IO ()
 part2 = do
     grid <- parse parser <$> getInput Main 2024 6
     let grid' = Map.insert (guard grid) Open grid
-    let opens = filter (\pos -> Map.lookup pos grid == Just Open) $ Map.keys grid
-    let loops = (\obstacle -> walk' grid' obstacle (guard grid) (0,-1) empty) <$> opens
+    let route = walk grid' (guard grid) (0,-1) empty
+    let loops = (\obstacle -> walk' (Map.insert obstacle Obstacle grid') (guard grid) (0,-1) empty) <$> toList route
     print $ length $ filter id loops
