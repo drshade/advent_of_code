@@ -25,6 +25,12 @@ parse parser input =
     Left err -> error $ "A terribly unfortunate parsing error: " ++ (show err)
     Right a  -> a
 
+parseWithState :: Parsec String s a -> s -> String -> a
+parseWithState parser state input =
+  case runParser parser state "(input)" input of
+    Left err -> error $ "A terribly unfortunate parsing error: " ++ (show err)
+    Right a  -> a
+
 -- Get the puzzle input, either from disk, or from http first time
 --
 type Year = Int
