@@ -60,6 +60,29 @@ parser' = do
     pure $ reverse blocks
     where val = read . (: []) <$> digit
 
+compact' :: Vec.Vector Block' -> Vec.Vector Block'
+compact' blocks =
+    -- Find first free space
+    case Vec.findIndex (\case
+                            Free' _ -> True
+                            _ -> False) blocks of
+        Nothing -> blocks
+        Just index ->
+            let (Free' freesize) = blocks Vec.! index
+                (lead, rest) = Vec.splitAt index blocks
+                -- Find first block that would fit from the end
+             in case Vec.findIndex (\case
+                                        File' _ size' -> size' <= freesize
+                                        _ -> False) $ Vec.reverse blocks of
+                    Just indexRev' ->
+                        let (File' _id size') = blocks Vec.! index
+                            indexRemove = Vec.length blocks - indexRev' - 1
+                            insert = if freesize == size' then [File' _id size'] else [Free' (freesize - size'), File' _id size']
+                         in lead Vec.++ (Vec.fromList insert) Vec.++ (compact' (Vec.drop 1 rest))
+                    Nothing ->
+                        lead Vec.++ (Vec.fromList [Free' freesize]) Vec.++ (compact' (Vec.drop 1 rest))
+
+
 part1 :: IO Int
 part1 = do
     putStrLn "parsing..."
@@ -71,4 +94,4 @@ part2 :: IO ()
 part2 = do
     blocks <- parseWithState parser' (0, []) <$> getInput (Example 1) 2024 9
     putStrLn $ show blocks
-    -- putStrLn $ show $ compact' blocks (reverse blocks) []
+    putStrLn $ show $ compact' (Vec.fromList blocks)
