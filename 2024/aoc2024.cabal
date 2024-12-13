@@ -64,7 +64,7 @@ executable aoc2024
     other-modules:      Handy, DayXX
                       , Day01, Day02, Day03, Day04, Day05
                       , Day06, Day07, Day08, Day09, Day10
-                      , Day11
+                      , Day11, Day12, Day13
                        
 
     -- LANGUAGE extensions used by modules in this package.
@@ -84,6 +84,7 @@ executable aoc2024
                       , MemoTrie
                       , matrix
                       , vector
+                      , hmatrix
 
     -- Directories containing source files.
     hs-source-dirs:   app
