@@ -64,7 +64,7 @@ executable aoc2024
     other-modules:      Handy, DayXX
                       , Day01, Day02, Day03, Day04, Day05
                       , Day06, Day07, Day08, Day09, Day10
-                      , Day11, Day12, Day13
+                      , Day11, Day12, Day13, Day14
                        
 
     -- LANGUAGE extensions used by modules in this package.
@@ -85,6 +85,7 @@ executable aoc2024
                       , matrix
                       , vector
                       , hmatrix
+                      , h-raylib
 
     -- Directories containing source files.
     hs-source-dirs:   app

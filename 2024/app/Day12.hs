@@ -2,19 +2,19 @@ module Day12 where
 import           Control.Monad       (join)
 import           Control.Monad.State (State, get, gets, put, runState)
 import           Data.Functor        (void)
-import           Data.List           (partition)
+import           Data.IORef          (IORef, modifyIORef, readIORef)
+import           Data.List           (insertBy, partition, unfoldr)
 import qualified Data.Map            as Map
 import           Data.Maybe          (fromMaybe)
 import qualified Data.Set            as Set
 import           Debug.Trace         (trace)
+import           GHC.IORef           (newIORef)
 import           Handy
 import           Text.Parsec         (anyChar, getPosition, many1, newline,
                                       optional, sourceColumn, sourceLine)
 
 type Pos = (Int, Int)
 type Grid = (Map.Map Pos Char)
-
-type Visited = Set.Set Pos
 
 parser :: Parser Grid
 parser = Map.fromList <$> many1 (block <* optional newline)
@@ -24,46 +24,43 @@ parser = Map.fromList <$> many1 (block <* optional newline)
             c <- anyChar
             pure (pos, c)
 
-type Flood a = State (Grid, Visited) a
+add :: (Int, Int) -> (Int, Int) -> (Int, Int)
+add (a,b) (c,d) = (a+c, b+d)
 
-data Category a = Inside a | Outside a deriving (Show)
+flood :: Grid -> Pos -> (Int, Int)
+flood grid startpos =
+    let x :: [(Int, Int)] = unfoldr (uncurry eat) (Map.toList grid, Set.singleton startpos)
+        y = foldr add (0,0) $ x
+     in y
+    where
+        eat :: [(Pos, Char)] -> Set.Set Pos -> Maybe ((Int, Int), ([(Pos, Char)], Set.Set Pos))
+        eat [] _          = Nothing
+        eat ((p@(px, py), c):ps) visited =  Just (
+                                                    foldr add (0,0) ([ case Map.lookup (px+dx,py+dy) grid of
+                                                        Nothing           -> (0,1)
+                                                        Just c' | c' == c -> (1,0)
+                                                        Just c'           -> (0,1)
+                                                    | (dx, dy) <- alldirs
+                                                    , (px+dx,py+dy) `Set.notMember` visited
+                                                    ]), (ps, Set.insert p visited)
+                                                )
 
-notVisited :: Visited -> Pos -> Bool
-notVisited visited pos = Set.notMember pos visited
+        alldirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
-flood :: Char -> Pos -> Flood [Category Pos]
-flood matching pos@(x,y) = do
-    (grid, visited) <- get
-    let neighbours = [(0,-1),(1,0),(0,1),(-1,0)]
-                        >>= (\(dx,dy) ->
-                                if notVisited visited (x+dx,y+dy)
-                                    then case Map.lookup (x+dx,y+dy) grid of
-                                        Nothing -> [Outside (x+dx,y+dy)]
-                                        Just n  | n == matching -> [Inside (x+dx,y+dy)]
-                                                | otherwise -> [Outside (x+dx,y+dy)]
-                                    else []
-                            )
-    -- set neighbours and ourself as visited
-    void $ put (grid, Set.union visited (Set.fromList $ pos : ((\case Inside a -> a; Outside a -> a) <$> neighbours)))
-    pure neighbours
-
-calc :: Pos -> Flood (Int, Int)
-calc startpos = do
-    grid <- gets fst
-    let me = fromMaybe (error "uhh...?") $ Map.lookup startpos grid
-    neighbours <- flood me startpos
-    -- let area = length $ (\case Inside a -> a; Outside a -> a) <$> filter (\case Inside _ -> True; _ -> False) neighbours
-    -- let circ = length $ (\case Inside a -> a; Outside a -> a) <$> filter (\case Inside _ -> False; _ -> True) neighbours
-
-    let (inside, outside) = partition (\case Inside _ -> True; _ -> False) neighbours
-    let z :: [Pos] = ((\case Inside a -> a; Outside a -> a) <$> inside)
-    area :: [Category Pos] <- join <$> traverse (\p -> flood me p) z
-
-    pure $ trace ("n=" <> show neighbours <> ";i=" <> show inside <> ";o=" <> show outside <> ";a=" <> show area) $ (length area, 0)
+bfs :: Grid -> Char -> Pos -> (Int, Int)
+bfs grid match (px,py) =
+    let r :: (Int, Int) = foldr (\(dx,dy) acc ->
+                                    case Map.lookup (px+dx,py+dy) grid of
+                                        Nothing -> acc `add` (0, 1)
+                                        Just candidate | candidate == match -> acc `add` (1, 0) `add` bfs grid match (px+dx,py+dy)
+                                        Just candidate                      -> acc `add` (0, 1) `add` bfs grid candidate (px+dx,py+dy)
+                                ) (0,0) alldirs
+     in r
+    where
+        alldirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
 part1 :: IO ()
 part1 = do
-    grid <- parse parser <$> getInput (Example 1) 2024 12
-    putStrLn $ show grid
-    let x = fst $ runState (calc (1,1)) (grid, Set.empty)
-    putStrLn $ show $ x
+    grid <- parse parser <$> getInput (Example 2) 2024 12
+    let start = fromMaybe (error "?") $ Map.lookup (1,1) grid
+    putStrLn $ show $ flood grid (1,1)
