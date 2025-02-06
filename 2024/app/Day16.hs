@@ -17,7 +17,7 @@ type Grid = Map.Map Pos Block
 parser :: Parser Grid
 parser = grid
     where   grid = do
-                blocks <- (many1 $ many1 block <* newline)
+                blocks <- many1 $ many1 block <* newline
                 pure (Map.fromList $ join blocks)
             block = do
                 pos <- (,) <$> (pred <$> sourceColumn <$> getPosition)
@@ -29,8 +29,8 @@ parser = grid
                             ]
                 pure (pos, c)
 
-manhattan :: (Pos, Facing) -> (Pos, Facing) -> Int
-manhattan ((ax,ay),_) ((bx,by),_) = abs (ax - bx) + abs (ay - by)
+manhattan :: Pos -> Pos -> Int
+manhattan (ax,ay) (bx,by) = abs (ax - bx) + abs (ay - by)
 
 options :: Grid -> (Pos, Facing) -> [(Pos, Facing)]
 options grid (pos@(px, py), _) =
@@ -58,8 +58,8 @@ part1 = do
     let route = aStar
                     (HashSet.fromList . options grid)   -- neighbours
                     cost                                -- cost function
-                    (manhattan (end, facing))           -- heuristic cost function
-                    (\(p, _) -> p == end)               -- termination
+                    (manhattan end . fst)               -- heuristic cost function
+                    ((== end) . fst)                    -- reached the goal yet?
                     (start, facing)                     -- start
 
-    pure $ maybe (error "no route") routecost route
+    pure $ maybe (error "no route") (routecost . ((start, facing) :)) route
