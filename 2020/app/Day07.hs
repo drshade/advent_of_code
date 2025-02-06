@@ -11,16 +11,16 @@ type Bags = Map.Map String [(Int, String)]
 
 parser :: Parser Bags
 parser = Map.fromList <$> many1 (entry <* optional newline)
-    where
-        colour = (<>) <$> word <* space <*> word
-                 where word = many1 letter
-        bag = (,) <$> read <$> many1 digit <* space
-                  <*> colour <* (choice $ try <$> [string " bags", string " bag"])
-        entry = (,) <$> colour <* string " bags contain "
-                    <*> (choice $ try <$> [ (string "no other bags" *> pure [])
-                                         , (bag `sepBy` (string ", "))
-                                         ]) <* string "."
+    where colour = (<>) <$> word <* space <*> word where word = many1 letter
+          bag    = (,) <$> read <$> many1 digit <* space
+                       <*> colour <* (choice $ try <$> [string " bags", string " bag"])
+          entry  = (,) <$> colour <* string " bags contain "
+                       <*> (choice $ try <$> [ (string "no other bags" *> pure [])
+                                             , (bag `sepBy` (string ", "))
+                                             ]
+                           ) <* string "."
 
+-- Very naive recursive method for matching bags in sub-bags
 matches :: String -> Bags -> [(Int, String)] -> Int
 matches _ _ [] = 0
 matches which allbags ((cnt, col):rest) =
@@ -30,5 +30,5 @@ matches which allbags ((cnt, col):rest) =
 part1 :: IO Int
 part1 = do
     bags <- parse parser <$> getInput Main 2020 07
+    -- Filter only the matches which have more than 0 matching bags
     pure $ length $ filter (( > 0) . snd) $ second (matches "shinygold" bags) <$> Map.toList bags
-
