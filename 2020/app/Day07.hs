@@ -20,12 +20,16 @@ parser = Map.fromList <$> many1 (entry <* optional newline)
                                              ]
                            ) <* string "."
 
--- Very naive recursive method for matching bags in sub-bags
+get :: Bags -> String -> [(Int, String)]
+get allbags name = fromMaybe (error "can't find bag!") $ Map.lookup name allbags
+
+-- Very naive recursive dfs over the tree matching and counting bags
 matches :: String -> Bags -> [(Int, String)] -> Int
-matches _ _ [] = 0
-matches which allbags ((cnt, col):rest) =
-    (if col == which then cnt else 0)
-        + matches which allbags (rest ++ (fromMaybe [] $ Map.lookup col allbags))
+matches which allbags = walk
+    where walk [] = 0
+          walk ((cnt, col):xs) = if col == which then cnt else 0
+                                    + walk (get allbags col) -- Down
+                                    + walk xs -- Across
 
 part1 :: IO Int
 part1 = do
@@ -35,12 +39,11 @@ part1 = do
 
 -- Walk graph, multiplying as we descend and summing each branch
 count :: Bags -> [(Int, String)] -> Int
-count _ [] = 1
-count allbags ((cnt, col):rest) =
-    (cnt * count allbags (fromMaybe [] $ Map.lookup col allbags)) + count allbags rest
-
+count allbags = walk
+    where walk []              = 1
+          walk ((cnt, col):xs) = cnt * walk (get allbags col) + walk xs
+                            --   ^^ Multiply on descend         ^^ Sum across
 part2 :: IO Int
 part2 = do
     bags <- parse parser <$> getInput Main 2020 07
-    let Just start = Map.lookup "shinygold" bags
-    pure $ count bags start - 1
+    pure $ count bags (get bags "shinygold") - 1
