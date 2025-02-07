@@ -32,3 +32,15 @@ part1 = do
     bags <- parse parser <$> getInput Main 2020 07
     -- Filter only the matches which have more than 0 matching bags
     pure $ length $ filter (( > 0) . snd) $ second (matches "shinygold" bags) <$> Map.toList bags
+
+-- Walk graph, multiplying as we descend and summing each branch
+count :: Bags -> [(Int, String)] -> Int
+count _ [] = 1
+count allbags ((cnt, col):rest) =
+    (cnt * count allbags (fromMaybe [] $ Map.lookup col allbags)) + count allbags rest
+
+part2 :: IO Int
+part2 = do
+    bags <- parse parser <$> getInput Main 2020 07
+    let Just start = Map.lookup "shinygold" bags
+    pure $ count bags start - 1
