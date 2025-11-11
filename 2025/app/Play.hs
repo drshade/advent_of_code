@@ -59,5 +59,5 @@ runMyParser = do
 
 parser' :: Parser' [(Int, Int)]
 parser' = do
-    many $ (,) <$> (read <$> some digitChar <* space)
+    some $ (,) <$> (read <$> some digitChar <* space)
                <*> (read <$> some digitChar <* optional newline)

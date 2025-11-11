@@ -13,11 +13,13 @@ import           Network.HTTP.Client        (httpLbs, newManager, parseRequest,
 import           Network.HTTP.Client.TLS    (tlsManagerSettings)
 import           Network.HTTP.Types.Header  (hCookie)
 import           Network.HTTP.Types.Status  (statusCode)
+import           System.Console.Pretty      (Color (..), Pretty (..))
 import           System.Directory           (createDirectory,
                                              doesDirectoryExist, doesFileExist)
 import           System.IO                  (IOMode (ReadMode), hGetContents,
                                              openFile)
 import           Text.Megaparsec            (ParsecT, runParserT)
+import           Text.Megaparsec.Error      (errorBundlePretty)
 
 -- Most practically useful Parser in any context
 type Parser m a = ParsecT Void String m a
@@ -30,7 +32,8 @@ parse :: forall m a. Monad m => Parser m a -> String -> m a
 parse parser input = do
     result <- runParserT parser "(input)" input
     case result of
-        Left err -> error $ "A terribly unfortunate parsing error:\n" <> show err
+        Left err -> error $ color Red     "\nA terrible parsing error occured:\n"
+                         <> color Magenta (errorBundlePretty err)
         Right a  -> return a
 
 -- Run parser or die! Identity version
@@ -38,7 +41,8 @@ parse parser input = do
 parse' :: Parser' a -> String -> a
 parse' parser input =
     case runIdentity (runParserT parser "(input)" input) of
-        Left err -> error $ "A terribly unfortunate parsing error:\n" <> show err
+        Left err -> error $ color Red     "\nA terrible parsing error occured:\n"
+                         <> color Magenta (errorBundlePretty err)
         Right a  -> a
 
 -- Get the puzzle input, either from disk, or from http first time
