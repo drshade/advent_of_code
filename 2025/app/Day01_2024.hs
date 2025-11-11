@@ -1,13 +1,11 @@
 module Day01_2024 where
 
-import           Control.Monad.State       (State, runState)
-import           Control.Monad.State.Class (modify)
-import           Data.List                 (sort)
-import qualified Data.Map                  as Map
-import           Data.Maybe                (fromMaybe)
+import           Data.List            (sort)
+import qualified Data.Map             as Map
+import           Data.Maybe           (fromMaybe)
 import           Handy
-import           Text.Megaparsec           (many, some)
-import           Text.Megaparsec.Char      (digitChar, newline, space)
+import           Text.Megaparsec      (some)
+import           Text.Megaparsec.Char (digitChar, newline, space)
 
 parser :: Parser' [(Int, Int)]
 parser = some $ (,) <$> (read <$> some digitChar) <* space

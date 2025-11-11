@@ -34,6 +34,7 @@ parse parser input = do
         Right a  -> return a
 
 -- Run parser or die! Identity version
+-- TODO make friendlier error messages
 parse' :: Parser' a -> String -> a
 parse' parser input =
     case runIdentity (runParserT parser "(input)" input) of
