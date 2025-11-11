@@ -1,8 +1,8 @@
-module Handy where
+module Handy (Parser, Parser', parse, lift, puzzle, parse', Year, Day, PuzzleType(..)) where
 
 import           Control.Monad              (unless)
 import           Control.Monad.Identity     (Identity (runIdentity))
-import           Control.Monad.RWS          (RWS, runRWS)
+import           Control.Monad.Trans        (lift)
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
 import           Data.Functor               (void)
@@ -19,30 +19,26 @@ import           System.IO                  (IOMode (ReadMode), hGetContents,
                                              openFile)
 import           Text.Megaparsec            (ParsecT, runParserT)
 
--- Most practically useful Parser using RWS & IO
-type Parser r w s a = Monoid w => ParsecT Void String (RWS r w s) a
+-- Most practically useful Parser in any context
+type Parser m a = ParsecT Void String m a
 
--- And a simpler version (with no RWS bits)
-type Parser' a = Parser () () () a
+-- And a simpler version using Identity
+type Parser' a = Parser Identity a
 
 -- Run parser or die! Big-boy version
-parse :: forall r w s a. Show w => Show s => Monoid w => Parser r w s a -> r -> s -> String -> (a, s, w)
-parse parser r s input = do
-    -- runParserT gives us a slightly strange (Either e a, s, w) - which is nice
-    -- i guess because we can inspect the state and writer even in the error case
-    -- but makes the pattern match a little more interesting :)
-    case runRWS (runParserT parser "(input)" input) r s of
-        (Left err, s, w) ->
-            error $ "A terribly unfortunate parsing error:\n" <> show err
-                 <> "\nState was :\n" <> show s
-                 <> "\nWriter was:\n" <> show w
-        (Right a, s, w)  -> (a, s, w)
+parse :: forall m a. Monad m => Parser m a -> String -> m a
+parse parser input = do
+    result <- runParserT parser "(input)" input
+    case result of
+        Left err -> error $ "A terribly unfortunate parsing error:\n" <> show err
+        Right a  -> return a
 
--- Run parser or die! Baby version (no reader, state or writer)
+-- Run parser or die! Identity version
 parse' :: Parser' a -> String -> a
-parse' parser input = do
-    let (a, _, _) = parse parser () () input
-     in a
+parse' parser input =
+    case runIdentity (runParserT parser "(input)" input) of
+        Left err -> error $ "A terribly unfortunate parsing error:\n" <> show err
+        Right a  -> a
 
 -- Get the puzzle input, either from disk, or from http first time
 --
@@ -50,8 +46,8 @@ type Year = Int
 type Day = Int
 data PuzzleType = Main | Example Int
 
-getInput :: PuzzleType -> Year -> Day -> IO String
-getInput which_input year day = do
+puzzle :: PuzzleType -> Year -> Day -> IO String
+puzzle which year day = do
     -- Create directory and download file if it doesn't already exist
     void $ do
         doesDirectoryExist local_path >>= \exists -> unless exists (createDirectory local_path)
@@ -62,7 +58,7 @@ getInput which_input year day = do
 
     where
         local_path = "data/"
-        local_file = case which_input of
+        local_file = case which of
             Example n -> "input_" <> show year <> "_" <> show day <> "_example_" <> show n
             Main      -> "input_" <> show year <> "_" <> show day
         download_url = "https://adventofcode.com/" <> show year <> "/day/" <> show day <> "/input"
