@@ -1,4 +1,4 @@
-module Handy (Parser, Parser', parse, lift, puzzle, parse', Year, Day, PuzzleType(..)) where
+module Handy (Parser, Parser', XY, xy, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..)) where
 
 import           Control.Monad              (unless)
 import           Control.Monad.Identity     (Identity (runIdentity))
@@ -18,7 +18,9 @@ import           System.Directory           (createDirectory,
                                              doesDirectoryExist, doesFileExist)
 import           System.IO                  (IOMode (ReadMode), hGetContents,
                                              openFile)
-import           Text.Megaparsec            (ParsecT, runParserT)
+import           Text.Megaparsec            (MonadParsec, ParsecT, getSourcePos,
+                                             runParserT, sourceColumn,
+                                             sourceLine, unPos)
 import           Text.Megaparsec.Error      (errorBundlePretty)
 
 -- Most practically useful Parser in any context
@@ -26,6 +28,9 @@ type Parser m a = ParsecT Void String m a
 
 -- And a simpler version using Identity
 type Parser' a = Parser Identity a
+
+-- Useful as a constraint
+type MonadParser = MonadParsec Void String
 
 -- Run parser or die! Big-boy version
 parse :: forall m a. Monad m => Parser m a -> String -> m a
@@ -44,6 +49,16 @@ parse' parser input =
         Left err -> error $ color Red     "\nA terrible parsing error occured:\n"
                          <> color Magenta (errorBundlePretty err)
         Right a  -> a
+
+--
+-- Small handy parser combinators
+--
+
+type XY = (Int, Int)
+
+-- Returns zero-indexed position of the parser (must run BEFORE consuming)
+xy :: MonadParser m => m XY
+xy = (\p -> (unPos (sourceColumn p) - 1, unPos (sourceLine p) - 1)) <$> getSourcePos
 
 -- Get the puzzle input, either from disk, or from http first time
 --
@@ -83,3 +98,13 @@ puzzle which year day = do
                 let body :: String = LChar8.unpack $ responseBody resp
                 writeFile (local_path <> local_file) body
                 pure ()
+
+--
+-- Handy functions
+--
+chunkBy :: (a -> a -> Bool) -> [a] -> [[a]]
+chunkBy _ []       = []
+chunkBy _ [a]      = [[a]]
+chunkBy p (a:b:xs) | p a b     = let (chunk:chunks) = chunkBy p (b:xs)
+                                  in (a:chunk):chunks -- Probably terribly inefficient and not tail recursive but i don't care (yet)
+                   | otherwise = [a] : chunkBy p (b:xs)

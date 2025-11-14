@@ -1,22 +1,19 @@
 module Day12_2024 where
 
-import           Control.Monad.State (State, evalState, get, modify)
-import           Data.List           (sort)
-import qualified Data.Map            as Map
-import           Data.Maybe          (fromMaybe, mapMaybe)
-import qualified Data.Set            as Set
+import           Control.Monad.State  (State, evalState, get, modify)
+import           Data.List            (sort)
+import qualified Data.Map             as Map
+import           Data.Maybe           (fromMaybe, mapMaybe)
+import qualified Data.Set             as Set
 import           Handy
-import           Text.Parsec         hiding (State, getInput, parse)
+import           Text.Megaparsec      hiding (Pos, State)
+import           Text.Megaparsec.Char
 
--- Wrote this originally during prep for 2025 season, and backported here
-
-type XY = (Int, Int)
 type Grid = Map.Map XY Char
 type Visited = Set.Set XY
 
-parser :: Parser Grid
-parser = Map.fromList <$> many ((,) <$> xy <*> (letter <* optional newline))
-    where xy = (\p -> (sourceColumn p - 1, sourceLine p - 1)) <$> getPosition
+parser :: Parser' Grid
+parser = Map.fromList <$> many ((,) <$> xy <*> (letterChar <* optional newline))
 
 cardinals :: XY -> [XY]
 cardinals (x,y) = [(x-1,y),(x+1,y),(x,y-1),(x,y+1)]
@@ -77,22 +74,14 @@ sides cluster = sum $ straightLines <$> dirs
              -- e.g. [1,2,4,6] => [[1,2],[4],[6]] is 3 straight lines
              in sum $ length . chunkBy (\a b -> b - a == 1) . sort <$> Map.elems grouped
 
-        -- Stolen from my 2025 handy module
-        chunkBy :: (a -> a -> Bool) -> [a] -> [[a]]
-        chunkBy _ []       = []
-        chunkBy _ [a]      = [[a]]
-        chunkBy p (a:b:xs) | p a b     = let (chunk:chunks) = chunkBy p (b:xs)
-                                          in (a:chunk):chunks -- Probably terribly inefficient and not tail recursive but i don't care (yet)
-                        | otherwise = [a] : chunkBy p (b:xs)
-
 part1 :: IO Int
 part1 = do
-    grid <- parse parser <$> getInput Main 2024 12
+    grid <- parse' parser <$> puzzle Main 2024 12
     let grps = evalState (groups grid) Set.empty
     pure . sum . fmap ((*) <$> area <*> perimeter) $ grps
 
 part2 :: IO Int
 part2 = do
-    grid <- parse parser <$> getInput Main 2024 12
+    grid <- parse' parser <$> puzzle Main 2024 12
     let grps = evalState (groups grid) Set.empty
     pure . sum . fmap ((*) <$> area <*> sides) $ grps

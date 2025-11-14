@@ -16,6 +16,7 @@ executable aoc2025
   main-is: Main.hs
   other-modules:
     Day01_2024
+    Day12_2024
     Handy
     Play
 
