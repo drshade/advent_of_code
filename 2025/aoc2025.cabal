@@ -15,6 +15,7 @@ executable aoc2025
   import: warnings
   main-is: Main.hs
   other-modules:
+    Day01_2018
     Day01_2024
     Day12_2024
     Handy
