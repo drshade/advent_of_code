@@ -10,7 +10,7 @@ import           Text.Megaparsec.Char
 
 input :: Parser' [Int]
 input = some $ (*) <$> (char '-' $> (-1) <|> char '+' $> 1)
-                   <*> (read <$> some digitChar <* optional newline)
+                   <*> (num <* optional newline)
 
 part1 :: IO Int
 part1 = sum . parse' input <$> puzzle Main 2018 1

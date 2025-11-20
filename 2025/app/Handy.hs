@@ -1,4 +1,4 @@
-module Handy (Parser, Parser', XY, xy, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..)) where
+module Handy (Parser, Parser', XY, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..)) where
 
 import           Control.Monad              (unless)
 import           Control.Monad.Identity     (Identity (runIdentity))
@@ -19,8 +19,9 @@ import           System.Directory           (createDirectory,
 import           System.IO                  (IOMode (ReadMode), hGetContents,
                                              openFile)
 import           Text.Megaparsec            (MonadParsec, ParsecT, getSourcePos,
-                                             runParserT, sourceColumn,
+                                             runParserT, some, sourceColumn,
                                              sourceLine, unPos)
+import           Text.Megaparsec.Char       (digitChar)
 import           Text.Megaparsec.Error      (errorBundlePretty)
 
 -- Most practically useful Parser in any context
@@ -59,6 +60,9 @@ type XY = (Int, Int)
 -- Returns zero-indexed position of the parser (must run BEFORE consuming)
 xy :: MonadParser m => m XY
 xy = (\p -> (unPos (sourceColumn p) - 1, unPos (sourceLine p) - 1)) <$> getSourcePos
+
+num :: MonadParser m => m Int
+num = read <$> some digitChar
 
 -- Get the puzzle input, either from disk, or from http first time
 --

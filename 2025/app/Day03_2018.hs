@@ -2,10 +2,8 @@
 module Day03_2018 where
 
 import           Control.Monad        (foldM)
-import           Data.List            (delete)
 import qualified Data.Map             as Map
-import           Data.Maybe           (catMaybes, mapMaybe)
-import qualified Data.Set             as Set
+import           Data.Maybe           (mapMaybe)
 import           Handy
 import           Text.Megaparsec      hiding (empty)
 import           Text.Megaparsec.Char
@@ -16,10 +14,9 @@ type Claim = Int
 data Swatch = Swatch Claim XY Size deriving (Show)
 
 input :: Parser' [Swatch]
-input = some $ Swatch <$> (char '#' *> val <* string " @ ")
-                      <*> ((,) <$> val <* char ',' <*> val <* string ": ")
-                      <*> ((,) <$> val <* char 'x' <*> val <* optional newline)
-    where val = read <$> some digitChar
+input = some $ Swatch <$> (char '#' *> num <* string " @ ")
+                      <*> ((,) <$> num <* char ',' <*> num <* string ": ")
+                      <*> ((,) <$> num <* char 'x' <*> num <* optional newline)
 
 xys :: Swatch -> [XY]
 xys (Swatch _ (x,y) (w,h)) = [(x',y') | x' <- [x..x+w-1], y' <- [y..y+h-1]]
@@ -33,20 +30,16 @@ part1 = do
                  ) Map.empty values
     pure $ length $ Map.filter (>= 2) fabric
 
-part2 :: IO Int
+part2 :: IO (Either Claim ())
 part2 = do
     values <- parse' input <$> puzzle Main 2018 3
-
     let fabric :: Map.Map XY Int
         fabric = foldr (\swatch fab ->
                     foldr (\p -> Map.insertWith (+) p 1) fab $ xys swatch
                  ) Map.empty values
-
     -- run through our swatches again, and see which one is entirely claim 1
-    let Left answer = foldM (\_ sw@(Swatch claim _ _) ->
-                                if all (== 1) $ mapMaybe (`Map.lookup` fabric) (xys sw)
-                                    then Left claim
-                                    else Right ()
-                            ) () values
-
-    pure answer
+    pure $ foldM (\_ sw@(Swatch claim _ _) ->
+                if all (== 1) $ mapMaybe (`Map.lookup` fabric) (xys sw)
+                    then Left claim
+                    else Right ()
+           ) () values
