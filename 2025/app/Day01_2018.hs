@@ -20,10 +20,10 @@ part2 = do
     values <- parse' input <$> puzzle Main 2018 1
     -- Naughty on matching only Left, but we know it must terminate
     -- Leverage Either & foldM to build a terminating fold mechanism :) Magical
-    let Left (answer, _) = foldM (\(acc', seen) val ->
-                                    let freq = acc' + val
-                                    in if freq `member` seen
-                                        then Left (freq, seen)
-                                        else Right (freq, insert freq seen)
-                                 ) (0, empty) $ cycle values
+    let Left answer = foldM (\(acc', seen) val ->
+                                let freq = acc' + val
+                                in if freq `member` seen
+                                    then Left freq
+                                    else Right (freq, insert freq seen)
+                            ) (0, empty) $ cycle values
     pure answer
