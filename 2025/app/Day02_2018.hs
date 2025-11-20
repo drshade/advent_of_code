@@ -11,7 +11,7 @@ input :: Parser' [String]
 input = some $ some letterChar <* optional newline
 
 part1 :: IO Int
-part1 = do
+part1 = do -- filter for number of chars in a frequency map `Map Char Integer`
     values <- parse' input <$> puzzle Main 2018 2
     pure $ (*) (length $ filter ([] /=) (Map.elems . Map.filter (== 2) . freqmap <$> values))
                (length $ filter ([] /=) (Map.elems . Map.filter (== 3) . freqmap <$> values))
@@ -24,9 +24,7 @@ part2 = do
     pure $ head                                 -- return the first
          $ (\(c, s) -> delete (head c) s)       -- removing the different char
             <$> filter ((== 1) . length . fst)  -- where there is only 1 difference
-                       (subt <$> combinations)  -- in each combination pair
-    where
-        subt :: (String, String) -> ([Char], String)
-        subt (s1, s2) = -- collect the differing chars between the two strings
-            (,) (zip s1 s2 >>= (\(a, b) -> ([a | a /= b]))) s1
+                       (dif <$> combinations)   -- in each combination pair
+    where dif :: (String, String) -> ([Char], String)
+          dif (s1, s2) = (,) (zip s1 s2 >>= (\(a, b) -> ([a | a /= b]))) s1
 
