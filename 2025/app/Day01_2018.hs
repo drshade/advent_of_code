@@ -22,7 +22,7 @@ part2 = do
     -- Leverage Either & foldM to build a terminating fold mechanism :) Magical
     let Left answer = foldM (\(acc', seen) val ->
                                 let freq = acc' + val
-                                in if freq `member` seen
+                                 in if freq `member` seen
                                     then Left freq
                                     else Right (freq, insert freq seen)
                             ) (0, empty) $ cycle values
