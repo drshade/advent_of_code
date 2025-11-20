@@ -1,18 +1,14 @@
 module Handy (Parser, Parser', XY, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..)) where
 
-import           Control.Monad              (unless)
-import           Control.Monad.Identity     (Identity (runIdentity))
-import           Control.Monad.Trans        (lift)
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
-import           Data.Functor               (void)
-import           Data.Void                  (Void)
 import           Network.HTTP.Client        (httpLbs, newManager, parseRequest,
                                              requestHeaders, responseBody,
                                              responseStatus)
 import           Network.HTTP.Client.TLS    (tlsManagerSettings)
 import           Network.HTTP.Types.Header  (hCookie)
 import           Network.HTTP.Types.Status  (statusCode)
+import           Prelude                    hiding (Day, Year, some)
 import           System.Console.Pretty      (Color (..), Pretty (..))
 import           System.Directory           (createDirectory,
                                              doesDirectoryExist, doesFileExist)

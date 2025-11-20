@@ -1,9 +1,9 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 module Day02_2018 where
 
-import           Data.List            (delete)
 import qualified Data.Map             as Map
 import           Handy
+import           Prelude              hiding (empty, insert, some)
 import           Text.Megaparsec      hiding (empty)
 import           Text.Megaparsec.Char
 
@@ -13,8 +13,8 @@ input = some $ some letterChar <* optional newline
 part1 :: IO Int
 part1 = do
     values <- parse' input <$> puzzle Main 2018 2
-    pure $ (*)  (length $ filter ([] /=) (Map.elems . Map.filter (== 2) . freqmap <$> values))
-                (length $ filter ([] /=) (Map.elems . Map.filter (== 3) . freqmap <$> values))
+    pure $ (*) (length $ filter ([] /=) (Map.elems . Map.filter (== 2) . freqmap <$> values))
+               (length $ filter ([] /=) (Map.elems . Map.filter (== 3) . freqmap <$> values))
     where freqmap = foldr (\c m -> Map.insertWith (const (+ 1)) c 1 m) Map.empty
 
 part2 :: IO String

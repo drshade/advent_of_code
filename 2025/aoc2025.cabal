@@ -16,9 +16,9 @@ executable aoc2025
   main-is: Main.hs
   other-modules:
     Day01_2018
-    Day03_2018
-    Day02_2018
     Day01_2024
+    Day02_2018
+    Day03_2018
     Day12_2024
     Handy
     Play
@@ -32,9 +32,6 @@ executable aoc2025
   build-depends:
     MemoTrie,
     astar,
-    base,
-    bytestring,
-    containers,
     directory,
     h-raylib,
     hmatrix,
@@ -43,8 +40,8 @@ executable aoc2025
     http-types,
     matrix,
     megaparsec,
-    mtl,
     pretty-terminal,
+    rerebase,
     split,
     unordered-containers,
     vector,

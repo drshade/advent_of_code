@@ -1,10 +1,9 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 module Day01_2018 where
 
-import           Control.Monad        (foldM)
-import           Data.Functor         (($>))
 import           Data.Set             (empty, insert, member)
 import           Handy
+import           Prelude              hiding (empty, insert, some)
 import           Text.Megaparsec      hiding (empty)
 import           Text.Megaparsec.Char
 

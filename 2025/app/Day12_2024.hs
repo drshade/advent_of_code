@@ -1,11 +1,9 @@
 module Day12_2024 where
 
-import           Control.Monad.State  (State, evalState, get, modify)
-import           Data.List            (sort)
 import qualified Data.Map             as Map
-import           Data.Maybe           (fromMaybe, mapMaybe)
 import qualified Data.Set             as Set
 import           Handy
+import           Prelude              hiding (many)
 import           Text.Megaparsec      hiding (Pos, State)
 import           Text.Megaparsec.Char
 

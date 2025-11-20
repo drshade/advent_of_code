@@ -1,10 +1,9 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 module Day03_2018 where
 
-import           Control.Monad        (foldM)
 import qualified Data.Map             as Map
-import           Data.Maybe           (mapMaybe)
 import           Handy
+import           Prelude              hiding (some)
 import           Text.Megaparsec      hiding (empty)
 import           Text.Megaparsec.Char
 

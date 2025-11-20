@@ -1,9 +1,8 @@
 module Day01_2024 where
 
-import           Data.List            (sort)
 import qualified Data.Map             as Map
-import           Data.Maybe           (fromMaybe)
 import           Handy
+import           Prelude              hiding (some)
 import           Text.Megaparsec      (some)
 import           Text.Megaparsec.Char (digitChar, newline, space)
 
