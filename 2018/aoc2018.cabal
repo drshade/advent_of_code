@@ -1,5 +1,5 @@
 cabal-version: 3.4
-name: aoc2025
+name: aoc2018
 version: 0.1.0.0
 license: BSD-3-Clause
 license-file: LICENSE
@@ -11,16 +11,14 @@ extra-doc-files: CHANGELOG.md
 common warnings
   ghc-options: -Wall
 
-executable aoc2025
+executable aoc2018
   import: warnings
   main-is: Main.hs
   other-modules:
-    Day01_2018
-    Day01_2024
-    Day02_2018
-    Day03_2018
-    Day04_2018
-    Day12_2024
+    Day01
+    Day02
+    Day03
+    Day04
     Handy
     Play
 
