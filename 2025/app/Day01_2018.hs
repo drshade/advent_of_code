@@ -26,3 +26,19 @@ part2 = do
                                     else Right (freq, insert freq seen)
                             ) (0, empty) $ cycle values
     pure answer
+
+-- (>>=) :: Monad m => m a -> (a -> m b) -> m b
+
+-- (>>=) :: Either a t -> (t -> Either a b) -> Either a b
+-- Right a >>= f = (f a)
+-- Left b >>= f = Left b
+-- pure = Right
+
+-- result :: Either String Int
+-- result = do
+--     x <- Right 5
+--     y <- Right 7
+--     z <- Left "fail"
+--     pure (x+y+z)
+
+-- print result
