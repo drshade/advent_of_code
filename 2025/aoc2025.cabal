@@ -15,13 +15,14 @@ executable aoc2025
   import: warnings
   main-is: Main.hs
   other-modules:
+    Day01
     Day01_2018
     Day01_2024
     Day02_2018
     Day03_2018
     Day04_2018
     Day12_2024
-    Day01
+    Day02
     Handy
     Play
 

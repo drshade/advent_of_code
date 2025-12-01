@@ -16,7 +16,7 @@ part1 = do
     values <- parse' input <$> puzzle Main 2025 1
     pure $ length
          $ filter (0 ==) -- scan around the dial, filtering only zeros
-         $ scanl (\v -> flip mod 100 . (+) v) 50 values
+         $ scanl (\v -> (`mod` 100) . (+) v) 50 values
 
 -- So horrible. Surely some better maths here!
 zeroes :: Int -> Int -> Int
@@ -32,6 +32,5 @@ part2 :: IO Int
 part2 = do
     values <- parse' input <$> puzzle Main 2025 1
     pure $ sum $ foldl -- continuously turn the dial and count up the clicks
-        (\(dial, acc) dir -> (,) ((dial + dir) `mod` 100)
-                                 (acc + zeroes dial dir)
+        (\(dial, acc) dir -> (,) ((dial + dir) `mod` 100) $ acc + zeroes dial dir
         ) (50, 0) values
