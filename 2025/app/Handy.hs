@@ -1,4 +1,5 @@
-module Handy (Parser, Parser', XY, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..)) where
+{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
+module Handy (Parser, Parser', XY, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
 
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
@@ -108,3 +109,9 @@ chunkBy _ [a]      = [[a]]
 chunkBy p (a:b:xs) | p a b     = let (chunk:chunks) = chunkBy p (b:xs)
                                   in (a:chunk):chunks -- Probably terribly inefficient and not tail recursive but i don't care (yet)
                    | otherwise = [a] : chunkBy p (b:xs)
+
+divisors :: Int -> [Int]
+divisors n = [x | x <- [1..(n-1)], n `rem` x == 0]
+
+allEqual :: (Eq a) => [a] -> Bool
+allEqual xs = length (group xs) <= 1

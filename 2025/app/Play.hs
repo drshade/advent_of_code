@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-unused-matches #-}
 module Play where
 
 play :: Int
@@ -8,4 +9,3 @@ play = do
                               else e
                 ) 1 [1..10]) id
      in x
-

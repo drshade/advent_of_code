@@ -31,6 +31,6 @@ zeroes dial dir -- turning right, then just divide
 part2 :: IO Int
 part2 = do
     values <- parse' input <$> puzzle Main 2025 1
-    pure $ sum $ foldl -- continuously turn the dial and count up the clicks
-        (\(dial, acc) dir -> (,) ((dial + dir) `mod` 100) $ acc + zeroes dial dir
+    pure $ snd $ foldl -- continuously turn the dial and count up the clicks
+        (\(dial, acc) dir -> (,) ((dial + dir) `mod` 100) (acc + zeroes dial dir)
         ) (50, 0) values
