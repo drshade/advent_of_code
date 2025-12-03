@@ -3,8 +3,8 @@
 module Day01 where
 
 import           Handy
-import           Prelude              hiding (empty, insert, some)
-import           Text.Megaparsec      hiding (empty)
+import           Prelude              hiding (some)
+import           Text.Megaparsec
 import           Text.Megaparsec.Char
 
 input :: Parser' [Int]
@@ -20,13 +20,13 @@ part1 = do
 
 -- So horrible. Surely some better maths here!
 zeroes :: Int -> Int -> Int
-zeroes dial dir -- turning right, then just divide
-                | dir > 0 = (dial + dir) `div` 100
+zeroes dial dir -- turning right, then just divide (rounds towards zero)
+                | dir > 0                   = (dial + dir) `div` 100
                 -- turning left, on zero its just divide
-                | dir < 0 && dial == 0 = (-dir) `div` 100
-                -- turning left past zero, then it's 1 plus
+                | dir < 0 && dial == 0      = (-dir) `div` 100
+                -- turning left past zero, then it's 1 plus (rounds towards -inf)
                 | dir < 0 && (-dir) >= dial = 1 + ((-dir) - dial) `div` 100
-                | otherwise = 0
+                | otherwise                 = 0
 
 part2 :: IO Int
 part2 = do
