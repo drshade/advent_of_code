@@ -17,9 +17,9 @@ part1 = do
                if any (\(rs, re) -> item >= rs && item <= re) ranges then (+ 1) else (+ 0)
            ) 0 items
 
-merge :: Ord a => [(a, a)] -> [(a, a)]
-merge [] = [] -- merge ranges together (list must be sorted)
-merge [x] = [x]                  -- if range start overlaps, merge it
+merge :: Ord a => [(a, a)] -> [(a, a)] -- merge ranges together (list must be sorted)
+merge [] = []
+merge [x] = [x]                        -- vvv if range start overlaps, merge it
 merge (r1@(s1,e1):r2@(s2,e2):rs) | e1 >= s2  = merge $ (s1, max e1 e2) : rs
                                  | otherwise = r1 : merge (r2 : rs)
 
