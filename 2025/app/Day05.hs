@@ -1,4 +1,3 @@
-
 module Day05 where
 
 import           Handy
