@@ -5,39 +5,37 @@ import           Prelude              hiding (some, try)
 import           Text.Megaparsec
 import           Text.Megaparsec.Char
 
-type Row = [Int]
 type Oper a = (a -> a -> a)
 
-input :: Parser' ([Row], [Oper Int])
+input :: Parser' [(Oper Int, [Int])]
 input = do
     row <- some ((optional hspace *> num `sepBy1` hspace) <* newline)
     ops <- choice [char '*' $> ((*) @Int), char '+' $> ((+) @Int)] `sepEndBy` hspace
-    pure (row, ops)
+    pure $ zip ops $ transpose row
 
-type Col = [String]
-
-columninput :: Parser' ([Col], [Oper Int])
+columninput :: Parser' [(Oper Int, [String])]
 columninput = do
     rows <- some (some (digitChar <|> char ' ') <* newline)
     ops <- choice [char '*' $> ((*) @Int), char '+' $> ((+) @Int)] `sepEndBy` hspace
-    pure (columnise ' ' rows, ops)
+    pure $ zip ops (columnise ' ' rows)
     where
-        columnise :: Char -> [String] -> [Col]
-        columnise delim rows = -- where there is a common char in all inputs, thats the common index to split on
-            let len = minimum $ length <$> rows
-                common = filter (\idx -> all (\str -> str !! idx == delim) rows) [0..len - 1]
-                -- Convert to ranges between delimiters, skipping the delim itself (+1)
-                ranges = zip (0 : fmap (+1) common) (common ++ [len])
-                split str = [take (e - s) (drop s str) | (s, e) <- ranges]
-             in transpose $ split <$> rows -- finally transpose after splitting
+        -- where there is a common char in all inputs, thats the common index to split on
+        columnise :: Eq a => a -> [[a]] -> [[[a]]]
+        columnise delim rows = transpose $ split <$> rows
+            where len = minimum $ length <$> rows
+                  -- list of indexes which have a delim in all the rows
+                  indexes = filter (\idx -> all ((== delim) . (!! idx)) rows) [0..len - 1]
+                  -- Convert to ranges between delimiters, skipping the delim itself (+1)
+                  ranges = zip (0 : fmap (+1) indexes) (indexes ++ [len])
+                  split str = [take (e - s) (drop s str) | (s, e) <- ranges]
 
 part1 :: IO Int
 part1 = do
-    (rows, opers) <- parse' input <$> puzzle Main 2025 6
-    pure $ sum $ uncurry foldr1 <$> zip opers (transpose rows)
+    cols <- parse' input <$> puzzle Main 2025 6
+    pure $ sum $ uncurry foldr1 <$> cols
 
 part2 :: IO Int
 part2 = do
-    (rows, opers) <- parse' columninput <$> puzzle Main 2025 6
+    cols <- parse' columninput <$> puzzle Main 2025 6
     -- horrible horrible horrible, but my brain is fried
-    pure $ sum ((\(oper, vals) -> foldr1 oper (read <$> transpose vals)) <$> zip opers rows)
+    pure $ sum $ (\(oper, vals) -> foldr1 oper (read <$> transpose vals)) <$> cols
