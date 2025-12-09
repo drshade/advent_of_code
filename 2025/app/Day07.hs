@@ -1,10 +1,12 @@
 module Day07 where
 
-import qualified Data.Map             as Map
-import qualified Data.Set             as Set
+import           Control.Monad.Trans.Writer.Strict (runWriterT)
+import qualified Data.Map                          as Map
+import qualified Data.Set                          as Set
+import           Day07Vis
 import           Handy
-import           Prelude              hiding (cast, some)
-import           Text.Megaparsec      hiding (State)
+import           Prelude                           hiding (cast, some)
+import           Text.Megaparsec                   hiding (State)
 import           Text.Megaparsec.Char
 
 type Start = XY
@@ -19,8 +21,9 @@ maxdepth :: Set.Set XY -> Int
 maxdepth s = snd $ maximumBy (compare `on` snd) $ Set.toList s
 
 -- DFS with State (to keep count of number of times we split)
-totalSplits :: Set Splitter -> XY -> State (Set XY) Int
+totalSplits :: Set Splitter -> XY -> Visualise (State (Set XY)) Int
 totalSplits splitters xy@(x, y) = do
+    tell [xy]
     counted <- get
     if y > maxdepth splitters || xy `Set.member` counted
         then pure 0
@@ -34,8 +37,9 @@ totalSplits splitters xy@(x, y) = do
             totalSplits splitters (x, y+1)
 
 -- DFS with State (keep total number of paths, memoized as a Map)
-totalPaths :: Set Splitter -> XY -> State (Map.Map XY Int) Int
+totalPaths :: Set Splitter -> XY -> Visualise (State (Map.Map XY Int)) Int
 totalPaths splitters xy@(x, y) = do
+    tell [xy]
     memo <- get
     case Map.lookup xy memo of
         Just a -> pure a
@@ -55,9 +59,15 @@ totalPaths splitters xy@(x, y) = do
 part1 :: IO Int
 part1 = do
     (start, splitters) <- parse' input <$> puzzle Main 2025 7
-    pure $ evalState (totalSplits splitters start) Set.empty
+    let solution = runWriterT $ totalSplits splitters start
+    let (answer, vis) = evalState solution Set.empty
+    displayVis splitters vis
+    pure answer
 
 part2 :: IO Int
 part2 = do
     (start, splitters) <- parse' input <$> puzzle Main 2025 7
-    pure $ evalState (totalPaths splitters start) Map.empty
+    let solution = runWriterT $ totalPaths splitters start
+    let (answer, vis) = evalState solution Map.empty
+    displayVis splitters vis
+    pure answer
