@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-module Handy (Parser, Parser', XY, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
+module Handy (Parser, Parser', XY, sourcex, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
 
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
@@ -57,6 +57,9 @@ type XY = (Int, Int)
 -- Returns zero-indexed position of the parser (must run BEFORE consuming)
 xy :: MonadParser m => m XY
 xy = (\p -> (unPos (sourceColumn p) - 1, unPos (sourceLine p) - 1)) <$> getSourcePos
+
+sourcex :: MonadParser m => m Int
+sourcex = (\p -> unPos (sourceColumn p) - 1) <$> getSourcePos
 
 num :: MonadParser m => m Int
 num = read <$> some digitChar
