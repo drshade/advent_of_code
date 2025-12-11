@@ -1,4 +1,1 @@
 packages: .
-
-extra-lib-dirs: /opt/homebrew/opt/glpk/lib
-extra-include-dirs: /opt/homebrew/opt/glpk/include
