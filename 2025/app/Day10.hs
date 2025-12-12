@@ -35,8 +35,8 @@ part1 = do
 
 -- Claude wrote this. I have no real idea of what it's doing.
 -- Its using SBV library (and z3 backend) to solve the linear equations
-solveMachine :: (HashSet Int, [HashSet Int], [Int]) -> IO (Maybe Int)
-solveMachine (_, buttons, targets) = do
+leastPushes :: (HashSet Int, [HashSet Int], [Int]) -> IO (Maybe Int)
+leastPushes (_, buttons, targets) = do
     let numButtons = length buttons
 
     result <- optimize Lexicographic $ do
@@ -57,5 +57,5 @@ solveMachine (_, buttons, targets) = do
 part2 :: IO ()
 part2 = do
     values <- parse' input <$> puzzle Main 2025 10
-    results <- mapM solveMachine values
+    results <- mapM leastPushes values
     print $ sum $ catMaybes results

@@ -1,8 +1,14 @@
+{-# LANGUAGE TypeFamilies #-}
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-module Handy (Parser, Parser', XY, sourcex, xy, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
+{-# OPTIONS_GHC -Wno-orphans #-}
+
+module Handy (Parser, Parser', XY, sourcex, xy, subtractXY, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
 
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
+import qualified Data.Map                   as Map
+import           Data.MemoTrie              (HasTrie (..), (:->:))
+import qualified Data.Set                   as Set
 import           Network.HTTP.Client        (httpLbs, newManager, parseRequest,
                                              requestHeaders, responseBody,
                                              responseStatus)
@@ -53,6 +59,9 @@ parse' parser input =
 --
 
 type XY = (Int, Int)
+
+subtractXY :: XY -> XY -> XY
+subtractXY (x1,y1) (x2,y2) = ((abs $ x1-x2), (abs $ y1-y2))
 
 -- Returns zero-indexed position of the parser (must run BEFORE consuming)
 xy :: MonadParser m => m XY
@@ -118,3 +127,20 @@ divisors n = [x | x <- [1..(n-1)], n `rem` x == 0]
 
 allEqual :: (Eq a) => [a] -> Bool
 allEqual xs = length (group xs) <= 1
+
+
+--
+-- Some extra HasTrie instances
+-- One for Set:
+instance (Ord a, HasTrie a) => HasTrie (Set.Set a) where
+    newtype (Set.Set a) :->: b = SetTrie ([a] :->: b)
+    trie f = SetTrie (trie (f . Set.fromList))
+    untrie (SetTrie t) = untrie t . Set.toAscList
+    enumerate (SetTrie t) = [(Set.fromList k, v) | (k, v) <- enumerate t]
+
+-- One for Map:
+instance (Ord k, HasTrie k, HasTrie v) => HasTrie (Map.Map k v) where
+    newtype (Map.Map k v) :->: b = MapTrie ([(k, v)] :->: b)
+    trie f = MapTrie (trie (f . Map.fromList))
+    untrie (MapTrie t) = untrie t . Map.toAscList
+    enumerate (MapTrie t) = [(Map.fromList k, v) | (k, v) <- enumerate t]
