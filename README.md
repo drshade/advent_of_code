@@ -245,9 +245,9 @@ import Algorithm.Search (dfs, bfs)
 findPath :: Node -> Maybe [Node]
 findPath start = 
     [dfs / bfs]
-        getNeighbours    -- (node -> [node]) - get adjacent nodes
-        isGoal           -- (node -> Bool) - have we reached the goal?
-        start            -- starting node
+        neighbours -- (node -> [node]) - get adjacent nodes
+        goal       -- (node -> Bool) - have we reached the goal?
+        start      -- starting node
 ```
 
 ## A* Pathfinding
@@ -263,7 +263,7 @@ findPath grid start end =
     aStar
         neighbours -- (node -> HashSet node) - get valid neighbors
         cost       -- (node -> node -> Int) - actual cost between nodes
-        heuristic  -- (node -> Int) - estimated cost to goal (e.g., manhattan distance)
-        isGoal     -- (node -> Bool) - check if we've reached the goal
+        heuristic  -- (node -> Int) - estimated cost to goal (e.g. manhattan distance)
+        goal       -- (node -> Bool) - check if we've reached the goal
         start      -- starting node
 ```
