@@ -1,0 +1,51 @@
+cabal-version: 3.4
+name: aoc2026
+version: 0.1.0.0
+license: BSD-3-Clause
+license-file: LICENSE
+author: Tom Wells
+maintainer: drshade@gmail.com
+build-type: Simple
+extra-doc-files: CHANGELOG.md
+
+common warnings
+  ghc-options: -Wall
+
+executable aoc2026
+  import: warnings
+  main-is: Main.hs
+  other-modules:
+    Day01_2019
+    Day02_2019
+    Handy
+    Play
+
+  default-extensions:
+    BangPatterns
+    LambdaCase
+    QuasiQuotes
+    TemplateHaskell
+
+  build-depends:
+    MemoTrie,
+    astar,
+    directory,
+    h-raylib,
+    hmatrix,
+    http-client,
+    http-client-tls,
+    http-types,
+    massiv,
+    matrix,
+    megaparsec,
+    parallel,
+    pretty-terminal,
+    rerebase,
+    sbv,
+    search-algorithms,
+    split,
+    vector,
+    lens,
+
+  hs-source-dirs: app
+  default-language: GHC2024
