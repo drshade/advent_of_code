@@ -2,7 +2,7 @@
 {-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 
-module Handy (Parser, Parser', XY, sourcex, xy, subtractXY, num, parse, lift, puzzle, parse', chunkBy, Year, Day, PuzzleType(..), allEqual, divisors) where
+module Handy where
 
 import qualified Data.ByteString.Char8      as Char8 (pack)
 import qualified Data.ByteString.Lazy.Char8 as LChar8 (unpack)
@@ -63,15 +63,29 @@ type XY = (Int, Int)
 subtractXY :: XY -> XY -> XY
 subtractXY (x1,y1) (x2,y2) = ((abs $ x1-x2), (abs $ y1-y2))
 
+addXY :: XY -> XY -> XY
+addXY (x1,y1) (x2,y2) = (x1+x2,y1+y2)
+
+manhattan :: XY -> XY -> Int
+manhattan (x1,y1) (x2,y2) = abs (x1 - x2) + abs (y1 - y2)
+
 -- Returns zero-indexed position of the parser (must run BEFORE consuming)
-xy :: MonadParser m => m XY
-xy = (\p -> (unPos (sourceColumn p) - 1, unPos (sourceLine p) - 1)) <$> getSourcePos
+sourcexy :: MonadParser m => m XY
+sourcexy = (\p -> (unPos (sourceColumn p) - 1, unPos (sourceLine p) - 1)) <$> getSourcePos
 
 sourcex :: MonadParser m => m Int
 sourcex = (\p -> unPos (sourceColumn p) - 1) <$> getSourcePos
 
 num :: MonadParser m => m Int
 num = read <$> some digitChar
+
+printXY :: Char -> (a -> Char) -> Map XY a -> String
+printXY def f m =
+    let (minx,miny) = (minimum $ fst <$> Map.keys m, minimum $ snd <$> Map.keys m)
+        (maxx,maxy) = (maximum $ fst <$> Map.keys m, maximum $ snd <$> Map.keys m)
+        cell xy = maybe def f (Map.lookup xy m)
+     in unlines [ [ cell (x, y) | x <- [minx .. maxx] ] | y <- [miny..maxy] ]
+
 
 -- Get the puzzle input, either from disk, or from http first time
 --

@@ -17,6 +17,7 @@ executable aoc2026
   other-modules:
     Day01_2019
     Day02_2019
+    Day03_2019
     Handy
     Play
 
@@ -46,6 +47,7 @@ executable aoc2026
     split,
     vector,
     lens,
+    containers,
 
   hs-source-dirs: app
   default-language: GHC2024
